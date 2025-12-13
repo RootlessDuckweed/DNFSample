@@ -27,6 +27,7 @@ namespace ZMUIFrameWork
 		     target.AddButtonClickListener(CloseButton,mWindow.OnCloseButtonClick);
 		     target.AddInputFieldListener(NameInputField,mWindow.OnNameInputChange,mWindow.OnNameInputEnd);
 		     target.AddButtonClickListener(EnterGameButton,mWindow.OnEnterGameButtonClick);
+		     
 		}
 	}
 }

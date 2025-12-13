@@ -24,10 +24,17 @@ public class Main : MonoBehaviour
         WorldManager.CreateWorld<HallWorld>();
         DontDestroyOnLoad(gameObject);
     }
-    
-    
+
+    private void Update()
+    {
+        WorldManager.OnUpdate();
+    }
+
+
     public void StartGame()
     {
        
     }
+    
+    
 }

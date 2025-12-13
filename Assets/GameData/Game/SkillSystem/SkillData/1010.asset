@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
+  m_Name: 1010
+  m_EditorClassIdentifier: 
+  character:
+    skillCharacter: {fileID: 7439582587569004764, guid: 961b52318dc24c242b7f2ddc2f1a2a37, type: 3}
+    skillAnimClip: {fileID: 7400000, guid: edf4fecabf4690f40baf7cbf28a4a44f, type: 2}
+    animProgress: 100
+    isLoopAnim: 0
+    loopCount: 0
+    logicFrame: 4
+    animLength: 0.2666667
+    skillDurationMS: 266
+    tempCharacter: {fileID: 0}
+  skillCfg:
+    skillIcon: {fileID: 21300000, guid: 417e1b5b828b21744a31b57ba95377d8, type: 3}
+    skillId: 1010
+    skillName: "\u62D4\u5200\u6218\u84C4\u529B"
+    needMagicValue: 100
+    skillShakeBeforeTimeMS: 0
+    skillAttackDurationMS: 266
+    skillShakeAfterTimeMS: 266
+    skillCDTimeMS: 1000
+    skillType: 3
+    stockPileStageData:
+    - stage: 1
+      skillID: 1011
+      startTimeMS: 500
+      endTimeMS: 1000
+    - stage: 2
+      skillID: 1012
+      startTimeMS: 1001
+      endTimeMS: 2000
+    skillGuideObj: {fileID: 0}
+    skillGuideRange: 0
+    comboBinationSkillID: 0
+    skillHitEffect: {fileID: 0}
+    hitEffectSurvivalTimeMs: 100
+    skillHitAudio: {fileID: 0}
+    showSkillPortrait: 0
+    skillPortraitObj: {fileID: 0}
+    skillDes: 
+  damageCfgList: []
+  effectCfgList:
+  - skillEffect: {fileID: 1206692485714072, guid: 1fd07134a5eb196479e2fdc2104039eb, type: 3}
+    triggerFrame: 1
+    endFrame: 0
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 0
+    isSetTransformParent: 0
+    transformParentType: 0
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  audioList: []
+  actionList: []

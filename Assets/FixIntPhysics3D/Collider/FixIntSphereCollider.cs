@@ -18,12 +18,20 @@ namespace FixIntPhysics
         /// 是否跟随目标 若跟随，球形碰撞范围则持续跟随
         /// </summary>
         private bool mIsFloowTarget;
-        public FixIntSphereCollider(FixInt radius, Vector3 conter)
+        public FixIntSphereCollider(FixInt radius, Vector3 center)
         {
             this.Radius = radius;
-            this.ColliderType = ColliderType.Shpere;
-            this.Conter = new FixIntVector3(conter);
+            this.ColliderType = ColliderType.Sphere;
+            this.Center = new FixIntVector3(center);
         }
+        
+        public FixIntSphereCollider(FixInt radius, FixIntVector3 center)
+        {
+            this.Radius = radius;
+            this.ColliderType = ColliderType.Sphere;
+            this.Center = center;
+        }
+        
         /// <summary>
         /// 更新碰撞体信息
         /// </summary>
@@ -35,7 +43,7 @@ namespace FixIntPhysics
             base.UpdateColliderInfo(pos, size, radius);
             this.Radius = radius/2;
 #if UNITY_EDITOR
-            this.mSphereGizomObj.transform.position = pos.ToVector3();
+            this.mSphereGizomObj.transform.position = pos.ToVector3()+ Center.ToVector3();
 #endif
         }
         /// <summary>
@@ -49,16 +57,21 @@ namespace FixIntPhysics
             this.LogicPosition = new FixIntVector3(pos);
             this.Radius = new FixInt(radius)/2;
 #if UNITY_EDITOR
-            this.mSphereGizomObj.transform.position = pos;
+            this.mSphereGizomObj.transform.position = pos+Center.ToVector3();
 #endif
         }
         /// <summary>
         /// 设置碰撞信息
         /// </summary>
         /// <param name="raduis">半径</param>
-        /// <param name="conter">中心偏移位置</param>
-        /// <param name="isFloowTarget">是否跟随目标</param>
-        public override void SetBoxData(float raduis, Vector3 conter, bool isFloowTarget = false)
+        /// <param name="center">中心偏移位置</param>
+        /// <param name="isFollowTarget">是否跟随目标</param>
+        public override void SetBoxData(float raduis, Vector3 center, bool isFollowTarget = false)
+        {
+            SetBoxData(new FixInt(raduis),new FixIntVector3( center), isFollowTarget);
+        }
+
+        public override void SetBoxData(FixInt raduis, FixIntVector3 center, bool isFollowTarget = false)
         {
 #if UNITY_EDITOR
             if (mSphereGizomObj == null)
@@ -67,13 +80,15 @@ namespace FixIntPhysics
                 mSphereGizomObj = obj.AddComponent<SphereColliderGizom>();
             }
 #endif
-            mIsFloowTarget = isFloowTarget;
-            this.Conter = new FixIntVector3(conter);
+            mIsFloowTarget = isFollowTarget;
+            this.Center = center;
             this.Radius = raduis;
 #if UNITY_EDITOR
-            mSphereGizomObj.SetBoxData(raduis, conter, mIsFloowTarget);
+            mSphereGizomObj.SetBoxData(raduis.RawFloat, center.ToVector3(), mIsFloowTarget);
 #endif
+            
         }
+
         public override void OnRelease()
         {
 #if UNITY_EDITOR

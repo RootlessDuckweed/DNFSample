@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
+  m_Name: 1003
+  m_EditorClassIdentifier: 
+  character:
+    skillCharacter: {fileID: 7439582587569004764, guid: 961b52318dc24c242b7f2ddc2f1a2a37, type: 3}
+    skillAnimClip: {fileID: 7400000, guid: 444cadff88f976748aa1d527e2f15a9a, type: 2}
+    animProgress: 100
+    isLoopAnim: 0
+    loopCount: 0
+    logicFrame: 10
+    animLength: 0.66666687
+    skillDurationMS: 666
+    tempCharacter: {fileID: 0}
+  skillCfg:
+    skillIcon: {fileID: 21300000, guid: bce8e18600ef9a14880b3bddc75334fc, type: 3}
+    skillId: 1003
+    skillName: "\u91CC\u9B3C\u5149\u525103"
+    needMagicValue: 0
+    skillShakeBeforeTimeMS: 66
+    skillAttackDurationMS: 666
+    skillShakeAfterTimeMS: 300
+    skillCDTimeMS: 0
+    skillType: 0
+    stockPileStageData: []
+    skillGuideObj: {fileID: 0}
+    skillGuideRange: 0
+    comboBinationSkillID: 0
+    skillHitEffect: {fileID: 5023627635078921320, guid: eebb9919fe1d53f4690a67203d880219, type: 3}
+    hitEffectSurvivalTimeMs: 100
+    skillHitAudio: {fileID: 8300000, guid: a0a0952ba5d216a4bb7f7c06c16b5f79, type: 3}
+    showSkillPortrait: 0
+    skillPortraitObj: {fileID: 0}
+    skillDes: 
+  damageCfgList:
+  - triggerFrame: 1
+    endFrame: 2
+    triggerIntervalMS: 0
+    isFollowEffect: 0
+    damageType: 1
+    damageRate: 0
+    damageDetectionMode: 1
+    boxSize: {x: 2.5, y: 3.5, z: 1}
+    boxOffset: {x: 2.2, y: 2, z: 0}
+    sphereOffset: {x: 0, y: 0.9, z: 0}
+    radius: 1
+    radiusHeight: 0
+    colliderPosType: 0
+    targetType: 2
+    addBuffs: 
+    triggerSkillID: 0
+  effectCfgList:
+  - skillEffect: {fileID: 1983390214506344, guid: bf7ca15f807f2d6418cde94c17c85eea, type: 3}
+    triggerFrame: 1
+    endFrame: 5
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 0
+    isSetTransformParent: 0
+    transformParentType: 0
+    GameEffectObj: {fileID: 0}
+  - skillEffect: {fileID: 1351735087442694, guid: f33f2e97566a7144794e63ee9b2fa4e2, type: 3}
+    triggerFrame: 1
+    endFrame: 5
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 5
+    isSetTransformParent: 1
+    transformParentType: 1
+    GameEffectObj: {fileID: 0}
+  audioList:
+  - skillAudio: {fileID: 8300000, guid: 19f00181d5133f342825ca53e5401888, type: 3}
+    audioName: Swordsman_liguidj_huidao03
+    triggerFrame: 1
+    isLoop: 0
+    endFrame: 0
+  actionList: []

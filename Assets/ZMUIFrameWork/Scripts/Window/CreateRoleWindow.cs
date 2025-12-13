@@ -23,6 +23,7 @@ using ZMUIFrameWork;
 		 public override void OnAwake()
 		 {
 			 dataCompt=gameObject.GetComponent<CreateRoleWindowDataComponent>();
+			 mDisableAnim = true;
 			 dataCompt.InitComponent(this);
 			 base.OnAwake();
 		 }

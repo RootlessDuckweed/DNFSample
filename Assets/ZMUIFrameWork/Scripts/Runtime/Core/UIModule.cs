@@ -11,7 +11,7 @@ public class UIModule
     private static UIModule _instance;
     public static UIModule Instance { get { if (_instance == null) { _instance = new UIModule(); } return _instance; } }
 
-    private Camera mUICamera;
+    public Camera mUICamera;
     private Transform mUIRoot;
     private WindowConfig mWindowConfig;
 

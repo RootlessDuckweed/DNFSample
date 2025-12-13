@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using SkillSystem.EditorWindow;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,8 +14,7 @@ namespace SkillSystem.Config
         [AssetList]
         [LabelText("角色模型")]
         [PreviewField(70,ObjectFieldAlignment.Center)]
-        [OnValueChanged("OnSelectCharacterChanged")]
-        public GameObject character;
+        public GameObject skillCharacter;
 
         [TitleGroup("技能渲染","所有英雄渲染数据都会在技能开始释放时触发")]
         [LabelText("技能动画")]
@@ -48,27 +48,29 @@ namespace SkillSystem.Config
         [BoxGroup("动画数据")]
         public int skillDurationMS = 0;
         
-        private GameObject _tempCharacter;
+#if UNITY_EDITOR
+
+        public GameObject tempCharacter;
         private bool _isPlayAnim = false;
         private double _lastRunTime = 0;
         private Animation _animationCache;
-        private bool _isPaused = false;
 
         [Button("播放",ButtonSizes.Large)]
         [ButtonGroup("按钮数组")]
         public void Play()
         {
-            if (character != null)
+            if (skillCharacter != null)
             {
                 //先从场景中查找技能对象，如果查找不到，主动克隆一个
-                string characterName = character.name;
-                _tempCharacter = GameObject.Find(characterName);
-                if (_tempCharacter == null)
+                string characterName = skillCharacter.name;
+                tempCharacter = GameObject.Find(characterName);
+                if (tempCharacter == null)
                 {
-                    _tempCharacter = GameObject.Instantiate(character);
+                    tempCharacter = GameObject.Instantiate(skillCharacter);
+                    tempCharacter.name = characterName;
                 }
                 
-                Animation animation = _tempCharacter.GetComponent<Animation>();
+                Animation animation = tempCharacter.GetComponent<Animation>();
                 _animationCache = animation;
                 if (!animation?.GetClip(skillAnimClip.name))
                 {
@@ -86,6 +88,8 @@ namespace SkillSystem.Config
 
                 _lastRunTime = 0;
                 _isPlayAnim = true;
+                var window = SkillComplierWindow.GetWindow(); 
+                window?.StartPlaySkill();
             }
         }
         
@@ -94,16 +98,18 @@ namespace SkillSystem.Config
         public void Pause()
         {
             _isPlayAnim = false;
+            
         }
 
         [Button("保存",ButtonSizes.Large)]
         [ButtonGroup("按钮数组")]
         public void SaveAssets()
         {
-            
+            var window = SkillComplierWindow.GetWindow(); 
+            window?.SaveSkillData();
         }
 
-        public void OnUpdate(Action OnProgressUpdateCallback)
+        public void OnUpdate(Action onProgressUpdateCallback)
         {
             if (_isPlayAnim)
             {
@@ -115,45 +121,43 @@ namespace SkillSystem.Config
                 float curAnimNormalizationValue = (float) curRuntime / animLength;
                 animProgress = (short)Mathf.Clamp(curAnimNormalizationValue*100, 0, 100);
                 logicFrame = (int)(curRuntime / LogicFrameConfig.LogicFrameInterval);
-                _animationCache.clip.SampleAnimation(_tempCharacter, (float)curRuntime);
+                _animationCache.clip.SampleAnimation(tempCharacter, (float)curRuntime);
                 
                 if (animProgress >= 100)
                 {
                     PlaySkillEnd();
                 }
                 
-                
-                
-                OnProgressUpdateCallback?.Invoke();
+                onProgressUpdateCallback?.Invoke();
             }
         }
 
         public void PlaySkillEnd()
         {
             _isPlayAnim = false;
+            var window = SkillComplierWindow.GetWindow();
+            window?.PlaySkillEnd();
         }
 
         public void OnAnimProgressChanged(float value)
         {
+            if(skillCharacter == null) return;
             //先从场景中查找技能对象，如果查找不到，主动克隆一个
-            string characterName = character.name;
-            if (characterName != _tempCharacter.name || _tempCharacter == null)
+            string characterName = skillCharacter.name;
+            if ( tempCharacter == null || characterName != tempCharacter.name)
             {
-                _tempCharacter = GameObject.Find(characterName);
-                if (_tempCharacter == null)
+                tempCharacter = GameObject.Find(characterName);
+                if (tempCharacter == null)
                 {
-                    _tempCharacter = GameObject.Instantiate(character);
+                    tempCharacter = GameObject.Instantiate(skillCharacter);
                 }
-                _animationCache = _tempCharacter.GetComponent<Animation>();
+                _animationCache = tempCharacter.GetComponent<Animation>();
             }
             float progressValue = value / 100 * skillAnimClip.length;
             logicFrame = (int)(progressValue / LogicFrameConfig.LogicFrameInterval);
-            _animationCache.clip.SampleAnimation(_tempCharacter,progressValue);
+            _animationCache.clip.SampleAnimation(tempCharacter,progressValue);
         }
-
-        public void OnSelectCharacterChanged(GameObject ch)
-        {
-            character = ch;
-        }
+                
+#endif
     }
 }

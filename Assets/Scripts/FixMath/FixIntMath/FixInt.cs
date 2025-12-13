@@ -38,7 +38,7 @@ namespace FixMath
         }
         public FixInt(int value)
         {
-            this.value = value << SHIFT;
+            this.value = (long)value<< SHIFT;
         }
         public FixInt(long value)
         {

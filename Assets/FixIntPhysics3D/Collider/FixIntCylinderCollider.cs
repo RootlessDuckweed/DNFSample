@@ -14,12 +14,12 @@ namespace FixIntPhysics
         /// 初始化碰撞体信息
         /// </summary>
         /// <param name="radius"></param>
-        /// <param name="conter"></param>
-        public FixIntCylinderCollider(FixInt radius, Vector3 conter)
+        /// <param name="center"></param>
+        public FixIntCylinderCollider(FixInt radius, Vector3 center)
         {
             this.Radius = radius;
             this.ColliderType = ColliderType.Cylinder;
-            this.Conter = new FixIntVector3(conter);
+            this.Center = new FixIntVector3(center);
         }
         /// <summary>
         /// 更新碰撞体信息
