@@ -11,6 +11,7 @@ namespace SkillSystem.Runtime
         None,
         Before,
         After,
+        EndButNeedUpdateEffectOrDamage,
         End
     }
 
@@ -109,17 +110,18 @@ namespace SkillSystem.Runtime
             }
             ReleaseAllEffect();
         }
+        
 
         public void OnLogicFrameUpdate()
         {
-            if (State == SkillState.None)
+            if (State == SkillState.None || State == SkillState.End)
             {
                 return;
             }
 
             _curLogicFrameAccTime = _curLogicFrame * LogicFrameConfig.LogicFrameIntervalMs;
 
-            if (State == SkillState.Before && _curLogicFrameAccTime >= _skillDataConfig.skillCfg.skillShakeAfterTimeMS)
+            if (State == SkillState.Before && _curLogicFrameAccTime >= _skillDataConfig.skillCfg.skillShakeAfterTimeMS && _skillDataConfig.skillCfg.skillType!=SkillType.StockPile)
             {
                 SkillAfter();
             }
@@ -168,14 +170,15 @@ namespace SkillSystem.Runtime
                     SkillEnd();
                 }
             }
-
+            
             _curLogicFrame++;
         }
+        
 
         public void StockPileFinish(StockPileStageData stageData)
         {
             SkillEnd();
-            State = SkillState.None;
+            State = SkillState.End;
             if (stageData.skillID == 0)
             {
                 Debug.LogError("蓄力技能配置的蓄力阶段技能id为0");

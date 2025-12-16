@@ -51,17 +51,19 @@ namespace SkillSystem.Runtime
                     }
                 }
             }
+            
         }
 
-        private void DestroyEffect(SkillEffectConfig item)
+        public void DestroyEffect(SkillEffectConfig item)
         {
             int hashCode = item.GetHashCode();
             _gameEffectObjDic.TryGetValue(hashCode, out var effect);
             if (effect != null)
             {
                 _gameEffectObjDic.Remove(hashCode);
-               effect.OnDestroy();
+                effect.OnDestroy();
             }
+            
         }
 
         public void ReleaseAllEffect()

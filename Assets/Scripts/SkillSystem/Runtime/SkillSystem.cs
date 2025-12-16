@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LogicLayer;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SkillSystem.Runtime
@@ -9,6 +10,8 @@ namespace SkillSystem.Runtime
     {
         private LogicActor _skillCreator;
         private List<Skill> _skillArr = new List<Skill>();
+        private Skill _curReleasingSkill;
+        private List<int> _combinationSkillIdList = new List<int>();
 
         public SkillSystem(LogicActor skillCreator)
         {
@@ -29,6 +32,17 @@ namespace SkillSystem.Runtime
 
         public void TriggerStockPileSkill(int skillID)
         {
+            // 技能在前摇状态下，是无法释放其他技能的
+            if (_curReleasingSkill != null && _curReleasingSkill.SkillId != skillID)
+            {
+                return;
+            }
+            // 如果这个技能有组合技能 ，是无法释放其他技能的
+            // 判断当前是否有组合技能正在释放中，如果有，是不允许其他技能释放的
+            if (_combinationSkillIdList.Count > 0 && !_combinationSkillIdList.Contains(skillID))
+            {
+                return;
+            }
             Skill skill = GetSkill(skillID);
             if (skill != null)
             {
@@ -60,27 +74,65 @@ namespace SkillSystem.Runtime
 
         public Skill ReleaseSkill(int skillId, Action<Skill> releaseAfterCallback, Action<Skill> releaseEndCallback)
         {
+            // 技能在前摇状态下，是无法释放其他技能的
+            if (_curReleasingSkill != null && _curReleasingSkill.State == SkillState.Before)
+            {
+                return null;
+            }
+
+            // 判断当前是否有组合技能正在释放中，如果有，是不允许其他技能释放的
+            if (_combinationSkillIdList.Count > 0 && !_combinationSkillIdList.Contains(skillId))
+            {
+                return null;
+            }
             foreach (var skill in _skillArr)
             {
                 if (skill.SkillId == skillId)
                 {
                     // 如果技能还在释放中 就不能再次释放 
-                    if(skill.State!=SkillState.None && skill.State != SkillState.End) return null;
+                    if(skill.State!=SkillState.None && skill.State != SkillState.End && skill.State!=SkillState.EndButNeedUpdateEffectOrDamage) return null;
                     // 释放技能
+                    if (skill.SkillCfg.comboBinationSkillID != 0)
+                    {
+                        CalculateCombinationSkillIdList(skillId);
+                    }
                     skill.ReleaseSkill(releaseAfterCallback, (ski, comboSkill) =>
                     {
                         // 释放完成技能的回调
                         releaseEndCallback?.Invoke(ski);
-                        // 如果是组合技能，处理技能组逻辑
-                        if (comboSkill)
+                        if (!comboSkill)
                         {
+                            _curReleasingSkill = null;
+                            if (ski.SkillCfg.comboBinationSkillID == 0 && _combinationSkillIdList.Count>0)
+                            {
+                                _combinationSkillIdList.Clear();
+                            }
                         }
+                        // 如果是组合技能，处理技能组逻辑
                     });
+                    _curReleasingSkill = skill;
                     return skill;
                 }
             }
             Debug.LogError($"Skill {skillId} not found");
             return null;
+        }
+
+        public void CalculateCombinationSkillIdList(int skillId)
+        {
+            if (skillId != 0)
+            {
+                int combinationSkillId = skillId;
+                while (combinationSkillId != 0)
+                {
+                    _combinationSkillIdList.Add(combinationSkillId);
+                    combinationSkillId = GetSkill(combinationSkillId).SkillCfg.comboBinationSkillID;
+                }
+            }
+            else
+            {
+                Debug.Log("无效的技能组合ID");
+            }
         }
 
         public void OnLogicFrameUpdate()

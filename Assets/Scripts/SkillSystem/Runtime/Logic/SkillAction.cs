@@ -31,7 +31,8 @@ namespace SkillSystem.Runtime
         /// <param name="item">行动配置</param>
         /// <param name="logicObject">移动的对象</param>
         /// <param name="finishedCallback">完成移动的回调</param>
-        public void AddMoveAction(SkillActionConfig item,LogicObject logicObject,Action finishedCallback = null)
+        /// <param name="updateCallback">移动更新回调</param>
+        public void AddMoveAction(SkillActionConfig item,LogicObject logicObject,Action finishedCallback = null,Action updateCallback = null)
         {
             FixIntVector3 movePos = new FixIntVector3(item.movePos);
             movePos.x *= logicObject.LogicXAxis;
@@ -47,7 +48,7 @@ namespace SkillSystem.Runtime
             {
                 moveType = MoveType.Z;
             }
-            MoveToAction action = new MoveToAction(logicObject,logicObject.LogicPos,targetPos, item.durationMs,() =>
+            MoveToAction action = new MoveToAction(logicObject,logicObject.LogicPos,targetPos, item.durationMs, moveFinishCallback : () =>
             {
                 if (item.actonFinishOption != MoveActonFinishOption.None)
                 {
@@ -63,9 +64,9 @@ namespace SkillSystem.Runtime
                             //TODO : 添加buff
                             break;
                     }
-                    finishedCallback?.Invoke();
                 }
-            },null,moveType);
+                finishedCallback?.Invoke();
+            },moveUpdateCallback: updateCallback,moveType);
             
             LogicActionController.Instance.RunAction(action);
         }

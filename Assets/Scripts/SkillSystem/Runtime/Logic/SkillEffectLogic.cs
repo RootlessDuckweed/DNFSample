@@ -3,6 +3,7 @@ using FixMath;
 using LogicLayer;
 using RenderLayer;
 using SkillSystem.Config;
+using UnityEngine;
 
 namespace SkillSystem.Runtime.Logic
 {
@@ -83,7 +84,39 @@ namespace SkillSystem.Runtime.Logic
         {
             if (_skillEffectConfig.isAttachAction && logicFrame == _skillEffectConfig.actionConfig.triggerFrame)
             {
-                skill.AddMoveAction(_skillEffectConfig.actionConfig, this);
+                skill.AddMoveAction(_skillEffectConfig.actionConfig, this,finishedCallback:() =>
+                {
+                    _collider.OnRelease();
+                    skill.DestroyEffect(_skillEffectConfig);
+                    _collider = null;
+                    
+                },updateCallback:()=>
+                {
+                    // 如果 技能状态已经结束，但是技能的移动特效操作未完成 则继续更新直到技能的移动等操作完成
+                    if (skill.State == SkillState.End)
+                    {
+                        // 更新碰撞体位置
+                        if (_skillEffectConfig.damageConfig.isFollowEffect)
+                        {
+                            skill.CreateOrUpdateCollider(_skillEffectConfig.damageConfig, _collider, this);
+                        }
+
+                        if (_skillEffectConfig.isAttachDamage)
+                        {
+                            // 处理间隔性伤害
+                            if (_skillEffectConfig.damageConfig.triggerIntervalMS != 0 && _collider != null)
+                            {
+                                _accRunTime += LogicFrameConfig.LogicFrameIntervalMs;
+                                if (_accRunTime >= _skillEffectConfig.damageConfig.triggerIntervalMS)
+                                {
+                                    skill.TriggerColliderDamage(_collider, _skillEffectConfig.damageConfig);
+                                    _accRunTime -= LogicFrameConfig.LogicFrameIntervalMs;
+                                }
+                            }
+                        }
+                    }
+                       
+                });
             }
         }
 

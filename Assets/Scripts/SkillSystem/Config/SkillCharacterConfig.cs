@@ -19,7 +19,7 @@ namespace SkillSystem.Config
         [TitleGroup("技能渲染","所有英雄渲染数据都会在技能开始释放时触发")]
         [LabelText("技能动画")]
         public AnimationClip skillAnimClip;
-
+        
         [BoxGroup("动画数据")]
         [ProgressBar(0,100,Height = 30)]
         [HideLabel]

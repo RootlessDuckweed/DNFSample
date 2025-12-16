@@ -44,7 +44,7 @@ namespace SkillSystem.Config
 
         [ToggleGroup("isAttachAction","是否附加行动"),ShowIf("EnableAttachAction")]
         public SkillActionConfig actionConfig;
-
+        
         private bool EnableAttachAction
         {
             get

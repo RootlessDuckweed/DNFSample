@@ -88,6 +88,11 @@ namespace LogicLayer
                 {
                     _curNormalComboIndex = 0;
                 }
+                ActionState = LogicObjectActionState.SkillReleasing;
+            }
+            else
+            {
+                ActionState = LogicObjectActionState.Idle;
             }
         }
 
@@ -121,6 +126,7 @@ namespace LogicLayer
             {
                 _curNormalComboIndex = 0;
             }
+            ActionState = LogicObjectActionState.Idle;
         }
 
 

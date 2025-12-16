@@ -15,6 +15,7 @@ MonoBehaviour:
   character:
     skillCharacter: {fileID: 7439582587569004764, guid: 961b52318dc24c242b7f2ddc2f1a2a37, type: 3}
     skillAnimClip: {fileID: 7400000, guid: 7dcdb5495e3633f41b3a00e4b86e965a, type: 2}
+    isNeedUpdateEffectAndColliderWhenSkillEnd: 0
     animProgress: 100
     isLoopAnim: 0
     loopCount: 0

@@ -10,62 +10,78 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
-  m_Name: 1008
+  m_Name: 1015
   m_EditorClassIdentifier: 
   character:
     skillCharacter: {fileID: 7439582587569004764, guid: 961b52318dc24c242b7f2ddc2f1a2a37, type: 3}
-    skillAnimClip: {fileID: 7400000, guid: 05cc3879f72810c4a9777e52064cc140, type: 2}
+    skillAnimClip: {fileID: 7400000, guid: 449f0b62ef767a54e8a1bbd96bea0df2, type: 2}
     isNeedUpdateEffectAndColliderWhenSkillEnd: 0
     animProgress: 100
     isLoopAnim: 0
     loopCount: 0
-    logicFrame: 21
-    animLength: 1.4333333
-    skillDurationMS: 1433
+    logicFrame: 45
+    animLength: 3
+    skillDurationMS: 3000
     tempCharacter: {fileID: 0}
   skillCfg:
-    skillIcon: {fileID: 21300000, guid: 5abe9808c4787ac42a15a43df41eb0a7, type: 3}
-    skillId: 1008
-    skillName: "\u5E7B\u5F71\u5251\u821E"
+    skillIcon: {fileID: 21300000, guid: 73eceae66522a4d458850c01d88e0de6, type: 3}
+    skillId: 1015
+    skillName: "\u5251\u9B42\u89C9\u9192\u4E00\u6BB5"
     needMagicValue: 100
     skillShakeBeforeTimeMS: 0
-    skillAttackDurationMS: 1433
-    skillShakeAfterTimeMS: 1433
-    skillCDTimeMS: 1000
+    skillAttackDurationMS: 3000
+    skillShakeAfterTimeMS: 3000
+    skillCDTimeMS: 60000
     skillType: 0
     stockPileStageData: []
     skillGuideObj: {fileID: 0}
     skillGuideRange: 0
-    comboBinationSkillID: 1009
+    comboBinationSkillID: 1016
     skillHitEffect: {fileID: 5023627635078921320, guid: eebb9919fe1d53f4690a67203d880219, type: 3}
     hitEffectSurvivalTimeMs: 100
-    skillHitAudio: {fileID: 8300000, guid: 4efb0f3057308b94f8a5da47f9d7c7cc, type: 3}
+    skillHitAudio: {fileID: 8300000, guid: 627f5b77950816e448995f5bf4d1298e, type: 3}
     showSkillPortrait: 0
     skillPortraitObj: {fileID: 0}
     skillDes: 
   damageCfgList:
-  - triggerFrame: 1
-    endFrame: 21
-    triggerIntervalMS: 120
+  - triggerFrame: 8
+    endFrame: 13
+    triggerIntervalMS: 0
     isFollowEffect: 0
     damageType: 1
-    damageRate: 330
+    damageRate: 150
     damageDetectionMode: 1
-    boxSize: {x: 2, y: 2.5, z: 2}
-    boxOffset: {x: 1, y: 1, z: 0}
+    boxSize: {x: 10, y: 3, z: 1}
+    boxOffset: {x: 5, y: 1, z: 1}
     sphereOffset: {x: 0, y: 0.9, z: 0}
     radius: 1
     radiusHeight: 0
     colliderPosType: 0
     targetType: 2
     addBuffs: 
-    triggerSkillID: 1
+    triggerSkillID: 0
+  - triggerFrame: 12
+    endFrame: 45
+    triggerIntervalMS: 200
+    isFollowEffect: 0
+    damageType: 1
+    damageRate: 100
+    damageDetectionMode: 1
+    boxSize: {x: 20, y: 20, z: 20}
+    boxOffset: {x: 0, y: 1, z: 0}
+    sphereOffset: {x: 0, y: 0.9, z: 0}
+    radius: 1
+    radiusHeight: 0
+    colliderPosType: 0
+    targetType: 0
+    addBuffs: 
+    triggerSkillID: 0
   effectCfgList:
-  - skillEffect: {fileID: 1020876491467082, guid: cfe6f997eab2d884989fa36a34b4b8dd, type: 3}
-    triggerFrame: 1
-    endFrame: 15
+  - skillEffect: {fileID: 1347182702190826, guid: fc45849b0275c71489ed427ca8b89cdc, type: 3}
+    triggerFrame: 8
+    endFrame: 14
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -95,11 +111,11 @@ MonoBehaviour:
       durationMs: 0
       actonFinishOption: 0
       actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: c70bee0b2eb56e845a43bc8cf8082e90, type: 3}
-    triggerFrame: 4
-    endFrame: 18
+  - skillEffect: {fileID: 1860367673197316, guid: 9efeeaa9c5ac2f842af55e82424cffcb, type: 3}
+    triggerFrame: 14
+    endFrame: 44
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
+    effectPosType: 5
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -129,11 +145,11 @@ MonoBehaviour:
       durationMs: 0
       actonFinishOption: 0
       actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: 694741c9ad5de0a40b5e4ae082f4d6d8, type: 3}
-    triggerFrame: 7
-    endFrame: 19
+  - skillEffect: {fileID: 1811629667057744, guid: 6347a352f545df14981ceaeeb2bf5761, type: 3}
+    triggerFrame: 15
+    endFrame: 44
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -163,11 +179,11 @@ MonoBehaviour:
       durationMs: 0
       actonFinishOption: 0
       actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: cfe6f997eab2d884989fa36a34b4b8dd, type: 3}
-    triggerFrame: 10
-    endFrame: 20
+  - skillEffect: {fileID: 1813342724688848, guid: a3c9d49b950960e42b058c96b6a25246, type: 3}
+    triggerFrame: 15
+    endFrame: 44
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
+    effectPosType: 5
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -197,77 +213,9 @@ MonoBehaviour:
       durationMs: 0
       actonFinishOption: 0
       actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: c70bee0b2eb56e845a43bc8cf8082e90, type: 3}
-    triggerFrame: 13
-    endFrame: 21
-    effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
-    isSetTransformParent: 0
-    transformParentType: 0
-    isAttachDamage: 0
-    damageConfig:
-      triggerFrame: 0
-      endFrame: 0
-      triggerIntervalMS: 0
-      isFollowEffect: 0
-      damageType: 0
-      damageRate: 0
-      damageDetectionMode: 0
-      boxSize: {x: 1, y: 1, z: 1}
-      boxOffset: {x: 0, y: 0, z: 0}
-      sphereOffset: {x: 0, y: 0.9, z: 0}
-      radius: 1
-      radiusHeight: 0
-      colliderPosType: 0
-      targetType: 0
-      addBuffs: 
-      triggerSkillID: 0
-    isAttachAction: 0
-    actionConfig:
-      triggerFrame: 0
-      moveActionType: 0
-      heightPos: {x: 0, y: 0, z: 0}
-      movePos: {x: 0, y: 0, z: 0}
-      durationMs: 0
-      actonFinishOption: 0
-      actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: 694741c9ad5de0a40b5e4ae082f4d6d8, type: 3}
-    triggerFrame: 16
-    endFrame: 21
-    effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
-    isSetTransformParent: 0
-    transformParentType: 0
-    isAttachDamage: 0
-    damageConfig:
-      triggerFrame: 0
-      endFrame: 0
-      triggerIntervalMS: 0
-      isFollowEffect: 0
-      damageType: 0
-      damageRate: 0
-      damageDetectionMode: 0
-      boxSize: {x: 1, y: 1, z: 1}
-      boxOffset: {x: 0, y: 0, z: 0}
-      sphereOffset: {x: 0, y: 0.9, z: 0}
-      radius: 1
-      radiusHeight: 0
-      colliderPosType: 0
-      targetType: 0
-      addBuffs: 
-      triggerSkillID: 0
-    isAttachAction: 0
-    actionConfig:
-      triggerFrame: 0
-      moveActionType: 0
-      heightPos: {x: 0, y: 0, z: 0}
-      movePos: {x: 0, y: 0, z: 0}
-      durationMs: 0
-      actonFinishOption: 0
-      actionFinishedList: 
-  - skillEffect: {fileID: 1020876491467082, guid: cfe6f997eab2d884989fa36a34b4b8dd, type: 3}
-    triggerFrame: 19
-    endFrame: 21
+  - skillEffect: {fileID: 1097995693667930, guid: 04c88d2ccc0e53c49a50ea87138f3464, type: 3}
+    triggerFrame: 3
+    endFrame: 8
     effectOffsetPosition: {x: 0, y: 0, z: 0}
     effectPosType: 0
     isSetTransformParent: 0
@@ -300,24 +248,48 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   audioList:
-  - skillAudio: {fileID: 8300000, guid: d7dcd60daa12a034eb60f287e1c07a1b, type: 3}
-    audioName: Swordsman_hh_huanyingjw_02
+  - skillAudio: {fileID: 8300000, guid: 576aa477afd3bd54a8b38ec0348b32fa, type: 3}
+    audioName: jianhunjuexing1
     triggerFrame: 1
     isLoop: 0
     endFrame: 0
-  - skillAudio: {fileID: 8300000, guid: 7c6dde792ce0fc641969a71c497e8239, type: 3}
-    audioName: Swordsman_hh_huanyingjw_03
-    triggerFrame: 4
+  - skillAudio: {fileID: 8300000, guid: 297153a5a0bb9cd46b2c98581f3c30ff, type: 3}
+    audioName: jianhunjuexing2
+    triggerFrame: 8
+    isLoop: 0
+    endFrame: 0
+  - skillAudio: {fileID: 8300000, guid: 297153a5a0bb9cd46b2c98581f3c30ff, type: 3}
+    audioName: jianhunjuexing2
+    triggerFrame: 11
     isLoop: 1
-    endFrame: 21
-  - skillAudio: {fileID: 8300000, guid: fe9bcba2d441dab4a94a0e2371a9d4a3, type: 3}
-    audioName: Swordsman_hh_huanyingjw_04
-    triggerFrame: 7
+    endFrame: 44
+  - skillAudio: {fileID: 8300000, guid: 297153a5a0bb9cd46b2c98581f3c30ff, type: 3}
+    audioName: jianhunjuexing2
+    triggerFrame: 12
     isLoop: 1
-    endFrame: 21
-  - skillAudio: {fileID: 8300000, guid: c3c147ce6d6338e40a927fcc7c69e7c8, type: 3}
-    audioName: Swordsman_hh_huanyingjw_05
-    triggerFrame: 10
+    endFrame: 44
+  - skillAudio: {fileID: 8300000, guid: 297153a5a0bb9cd46b2c98581f3c30ff, type: 3}
+    audioName: jianhunjuexing2
+    triggerFrame: 15
     isLoop: 1
-    endFrame: 21
-  actionList: []
+    endFrame: 44
+  - skillAudio: {fileID: 8300000, guid: b9c054822d33f4a408b459f0fe7e027e, type: 3}
+    audioName: janhunjuexing3
+    triggerFrame: 9
+    isLoop: 1
+    endFrame: 44
+  actionList:
+  - triggerFrame: 8
+    moveActionType: 0
+    heightPos: {x: 0, y: 0, z: 0}
+    movePos: {x: 8, y: 0, z: 0}
+    durationMs: 66
+    actonFinishOption: 0
+    actionFinishedList: 
+  - triggerFrame: 35
+    moveActionType: 0
+    heightPos: {x: 0, y: 0, z: 0}
+    movePos: {x: -8, y: 0, z: 0}
+    durationMs: 66
+    actonFinishOption: 0
+    actionFinishedList: 
