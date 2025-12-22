@@ -45,9 +45,8 @@ namespace RenderLayer
         /// <summary>
         /// 通用的位置更新逻辑
         /// </summary>
-        private void UpdatePosition()
+        protected virtual void UpdatePosition()
         {
-            // TODO:后续需要更改 不能使用Time.deltaTime
             if(_isUpdatePosAndRota)
                 transform.position = Vector3.Lerp(transform.position, LogicObj.LogicPos.ToVector3(), SmoothPosSpeed * Time.deltaTime);
         }
@@ -55,7 +54,7 @@ namespace RenderLayer
         /// <summary>
         /// 通用的对象方向更新逻辑
         /// </summary>
-        private void UpdateDir()
+        protected virtual void UpdateDir()
         {
             if (!_isUpdatePosAndRota) return;
             //RenderDir.x = LogicObj.LogicXAxis >= 0 ? 0 : -20;
@@ -63,7 +62,7 @@ namespace RenderLayer
             transform.localEulerAngles = RenderDir;
         }
 
-        public void SetLogicObject(LogicObject logicObj,bool isUpdatePositionAndRotation = true)
+        public virtual void SetLogicObject(LogicObject logicObj,bool isUpdatePositionAndRotation = true)
         {
             LogicObj = logicObj;
             _isUpdatePosAndRota = isUpdatePositionAndRotation;
@@ -80,6 +79,17 @@ namespace RenderLayer
         {
             
         }
+        
+        public virtual void PlayAnim(string clipName)
+        {
+            
+        }
+
+        public virtual string GetCurAnimName()
+        {
+            return string.Empty;
+        }
+
 
         public virtual void Damage(int damageValue,DamageSource damageSource)
         {
@@ -88,12 +98,22 @@ namespace RenderLayer
             item.ShowDamageText(damageValue, this);
         }
 
-        public void OnHit(GameObject effect, int survivalTimeMs, LogicActor source)
+        public virtual void OnHit(GameObject effect, int survivalTimeMs, LogicObject source)
         {
             if (effect != null)
             {
                 GameObject hitEffectObj = GameObject.Instantiate(effect);
                 hitEffectObj.transform.position = transform.position;
+                hitEffectObj.transform.localScale = source.LogicXAxis > 0 ? Vector3.one : new Vector3(-1, 1, 1);
+                Destroy(hitEffectObj,survivalTimeMs*1.0f/1000f);
+            }
+        }
+        public virtual void OnHitByBullet(GameObject effect, int survivalTimeMs, LogicObject source)
+        {
+            if (effect != null)
+            {
+                GameObject hitEffectObj = GameObject.Instantiate(effect);
+                hitEffectObj.transform.position = source.RenderObj.transform.position;
                 hitEffectObj.transform.localScale = source.LogicXAxis > 0 ? Vector3.one : new Vector3(-1, 1, 1);
                 Destroy(hitEffectObj,survivalTimeMs*1.0f/1000f);
             }

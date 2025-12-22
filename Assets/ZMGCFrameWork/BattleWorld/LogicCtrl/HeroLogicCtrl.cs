@@ -25,9 +25,9 @@ namespace ZMGC.Battle
 
 		public void InitHero()
 		{
-			GameObject heroObj = ZMAssetsFrame.Instantiate(AssetPathConfig.GAME_PREFABS_HERO + "1000",null);
+			GameObject heroObj = ZMAssetsFrame.Instantiate(AssetPathConfig.GAME_PREFABS_HERO + "1001",null);
 			HeroRender heroRender = heroObj.GetComponent<HeroRender>();
-			HeroLogic heroLogic = new HeroLogic(1000, heroRender);
+			HeroLogic heroLogic = new HeroLogic(1001, heroRender);
 			HeroLgc = heroLogic;
 			heroRender.SetLogicObject(heroLogic);
 			heroLogic.OnCreate();

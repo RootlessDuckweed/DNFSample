@@ -18,11 +18,12 @@ namespace SkillSystem.Config
         public List<SkillEffectConfig>  effectCfgList;
         public List<SkillAudioConfig> audioList;
         public List<SkillActionConfig> actionList;
+        public List<SkillBulletConfig> bulletList;
 #if UNITY_EDITOR
         
         public static void SaveSkillData(SkillCharacterConfig character, SkillConfig skillCfg,
             List<SkillDamageConfig> damageCfgList, List<SkillEffectConfig> effectCfgList,
-            List<SkillAudioConfig> audioCfgList, List<SkillActionConfig> actionCfgList)
+            List<SkillAudioConfig> audioCfgList, List<SkillActionConfig> actionCfgList,List<SkillBulletConfig> bulletCfgList)
         {
             var skillDataConfig = ScriptableObject.CreateInstance<SkillDataConfig>();
             skillDataConfig.character = character;
@@ -31,6 +32,7 @@ namespace SkillSystem.Config
             skillDataConfig.effectCfgList = effectCfgList;
             skillDataConfig.audioList = audioCfgList;
             skillDataConfig.actionList = actionCfgList;
+            skillDataConfig.bulletList = bulletCfgList;
             
             string assetPath = "Assets/GameData/Game/SkillSystem/SkillData/"+skillCfg.skillId+".asset";
             AssetDatabase.DeleteAsset(assetPath);

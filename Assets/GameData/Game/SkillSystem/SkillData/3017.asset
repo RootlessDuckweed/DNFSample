@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
+  m_Name: 3017
+  m_EditorClassIdentifier: 
+  character:
+    skillCharacter: {fileID: 1655574422363594, guid: 6e03e17984fcffe4792b9533f4280fb2, type: 3}
+    skillAnimClip: {fileID: 7400000, guid: 9b95ad53dde99ad469fa7ff9bea129db, type: 2}
+    animProgress: 100
+    isLoopAnim: 1
+    loopCount: 5
+    logicFrame: 15
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 15
+    animLength: 0.99999994
+    skillDurationMS: 999
+    tempCharacter: {fileID: 0}
+  skillCfg:
+    skillIcon: {fileID: 0}
+    skillId: 3017
+    skillName: "\u6FC0\u5149\u70AE\u4E8C\u6BB5\u6BB5\u84C4\u529B"
+    needMagicValue: 0
+    skillShakeBeforeTimeMS: 0
+    skillAttackDurationMS: 999
+    skillShakeAfterTimeMS: 999
+    skillCDTimeMS: 1
+    skillType: 0
+    stockPileStageData: []
+    skillGuideObj: {fileID: 0}
+    skillGuideRange: 0
+    comboBinationSkillID: 0
+    skillHitEffect: {fileID: 0}
+    hitEffectSurvivalTimeMs: 100
+    skillHitAudio: {fileID: 0}
+    showSkillPortrait: 0
+    skillPortraitObj: {fileID: 0}
+    skillDes: 
+  damageCfgList:
+  - triggerFrame: 3
+    endFrame: 7
+    triggerIntervalMS: 0
+    isFollowEffect: 0
+    damageType: 1
+    damageRate: 320
+    damageDetectionMode: 1
+    boxSize: {x: 17, y: 2, z: 1}
+    boxOffset: {x: 10, y: 1, z: 0}
+    sphereOffset: {x: 0, y: 0.9, z: 0}
+    radius: 1
+    radiusHeight: 0
+    colliderPosType: 0
+    targetType: 2
+    addBuffs: da750000
+    triggerSkillID: 0
+  effectCfgList:
+  - skillEffect: {fileID: 1260345263929180, guid: c7c505829f64b5045a71b3ada1cb3791, type: 3}
+    triggerFrame: 0
+    endFrame: 15
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 5
+    isSetTransformParent: 1
+    transformParentType: 1
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  - skillEffect: {fileID: 1090262287863842, guid: 02be04633d5276c4d859c6034e18ee38, type: 3}
+    triggerFrame: 1
+    endFrame: 15
+    effectOffsetPosition: {x: 0, y: 0.2, z: 0}
+    effectPosType: 0
+    isSetTransformParent: 0
+    transformParentType: 0
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  - skillEffect: {fileID: 1128845395510674, guid: 4afbcc7afe55d264f997f2a8dc3c1e0e, type: 3}
+    triggerFrame: 0
+    endFrame: 10
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 0
+    isSetTransformParent: 0
+    transformParentType: 0
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  audioList:
+  - skillAudio: {fileID: 8300000, guid: 7d359cffc27843347b25b6a309fe40af, type: 3}
+    audioName: Gunman_jiguangp_fashe
+    triggerFrame: 0
+    isLoop: 0
+    endFrame: 0
+  - skillAudio: {fileID: 8300000, guid: d416ae3f88612f741824673dd62b3571, type: 3}
+    audioName: gn_lshot_01
+    triggerFrame: 0
+    isLoop: 0
+    endFrame: 0
+  actionList:
+  - triggerFrame: 2
+    moveActionType: 0
+    heightPos: {x: 0, y: 0, z: 0}
+    movePos: {x: -1, y: 0, z: 0}
+    durationMs: 400
+    actonFinishOption: 0
+    actionFinishedList: 
+  bulletList: []

@@ -15,7 +15,6 @@ MonoBehaviour:
   character:
     skillCharacter: {fileID: 7439582587569004764, guid: 961b52318dc24c242b7f2ddc2f1a2a37, type: 3}
     skillAnimClip: {fileID: 7400000, guid: 7dcdb5495e3633f41b3a00e4b86e965a, type: 2}
-    isNeedUpdateEffectAndColliderWhenSkillEnd: 0
     animProgress: 100
     isLoopAnim: 0
     loopCount: 0
@@ -31,7 +30,7 @@ MonoBehaviour:
     skillShakeBeforeTimeMS: 0
     skillAttackDurationMS: 400
     skillShakeAfterTimeMS: 400
-    skillCDTimeMS: 0
+    skillCDTimeMS: 10000
     skillType: 0
     stockPileStageData: []
     skillGuideObj: {fileID: 0}
@@ -58,7 +57,7 @@ MonoBehaviour:
     radiusHeight: 0
     colliderPosType: 0
     targetType: 2
-    addBuffs: 
+    addBuffs: 4c270000
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1018684534159310, guid: 8adb2f9c5f209e14a8aa148688833513, type: 3}

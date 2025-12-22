@@ -130,6 +130,7 @@ namespace SkillSystem.Runtime.Logic
                 LogicPos = _skillCreator.LogicPos + offset;
             }
         }
+        
 
         public override void OnDestroy()
         {

@@ -11,7 +11,6 @@ namespace SkillSystem.Runtime
         None,
         Before,
         After,
-        EndButNeedUpdateEffectOrDamage,
         End
     }
 
@@ -89,6 +88,11 @@ namespace SkillSystem.Runtime
             _curLogicFrame = 0;
             _curLogicFrameAccTime = 0;
             _autoMatchStockStage = false;
+            if (_skillDataConfig.character.isSetCustomLogicFrame)
+            {
+                _skillDataConfig.character.logicFrame = _skillDataConfig.character.customLogicFrame;
+            }
+            OnBulletInit();
         }
 
         /// <summary>
@@ -104,11 +108,13 @@ namespace SkillSystem.Runtime
         {
             State = SkillState.End;
             OnReleaseSkillEnd?.Invoke(this, false);
+            ReleaseAllEffect();
+            OnBulletRelease();
             if (_skillDataConfig.skillCfg.comboBinationSkillID != 0)
             {
                 _skillCreator.ReleaseSkill(_skillDataConfig.skillCfg.comboBinationSkillID);
             }
-            ReleaseAllEffect();
+            
         }
         
 
@@ -135,7 +141,9 @@ namespace SkillSystem.Runtime
             OnLogicFrameUpdateAudio();
             // 技能行动逻辑帧
             OnLogicFrameUpdateAction();
-
+            // 子弹射击逻辑帧
+            OnLogicFrameUpdateBullet();
+            
             // 蓄力技能通过蓄力时间进行触发，与结束帧无关
             if (_skillDataConfig.skillCfg.skillType == SkillType.StockPile)
             {

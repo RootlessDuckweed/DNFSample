@@ -8,4 +8,5 @@
     public const string GAME_PREFABS_MONSTER = GAME_PREFABS + "Monster/";
     public const string SKILL_DATA_CONFIG = GAME + "SkillSystem/SkillData/";
     public const string DAMAGE_TEXT = GAME_PREFABS+"DamageItem/DamageText";
+    public const string BUFF_DATA = GAME + "SkillSystem/BuffData/";
 }

@@ -32,7 +32,7 @@ namespace ZMGC.Battle
 		 public int[] monsterIDArr = new[]
 		 {
 			 20001,
-			 20004,
+			 20005,
 		 };
 	
 		 public  void OnCreate()

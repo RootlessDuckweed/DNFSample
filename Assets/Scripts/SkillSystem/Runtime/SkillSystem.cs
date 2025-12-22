@@ -90,7 +90,7 @@ namespace SkillSystem.Runtime
                 if (skill.SkillId == skillId)
                 {
                     // 如果技能还在释放中 就不能再次释放 
-                    if(skill.State!=SkillState.None && skill.State != SkillState.End && skill.State!=SkillState.EndButNeedUpdateEffectOrDamage) return null;
+                    if(skill.State!=SkillState.None && skill.State != SkillState.End) return null;
                     // 释放技能
                     if (skill.SkillCfg.comboBinationSkillID != 0)
                     {

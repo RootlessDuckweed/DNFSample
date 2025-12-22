@@ -1,4 +1,6 @@
 ﻿using System;
+using FixMath;
+using Game.Timer;
 using LogicLayer;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
@@ -16,6 +18,12 @@ namespace ZMUIFrameWork.Scripts.Item
 
         private Skill _skillData;
         private LogicActor _skillCreator;
+        //是否进入技能CD
+        private bool _isEnterSkillCd;
+        //已经冷却的时间
+        private float _alreadyCdTime;
+        //技能冷却时间
+        private float _skillCdTime;
         /// <summary>
         /// 设置技能设置
         /// </summary>
@@ -49,9 +57,10 @@ namespace ZMUIFrameWork.Scripts.Item
         /// <param name="skillDirDis">技能半径距离</param>
         private void OnUpdateSkillGuide(SKillGuideType sKillGuide, bool isCancel, Vector3 skillPos, int skillId, float skillDirDis)
         {
+            if (_isEnterSkillCd) return;
             if (sKillGuide == SKillGuideType.LongPress)
             {
-                _skillCreator.ReleaseSkill(skillId);
+                _skillCreator.ReleaseSkill(skillId,releaseSkillCallback:OnReleaseSkill);
             }
             else if (sKillGuide == SKillGuideType.Position)
             {
@@ -67,9 +76,10 @@ namespace ZMUIFrameWork.Scripts.Item
         /// <param name="skillId">技能触发ID</param>
         private void OnTriggerSkill(SKillGuideType sKillGuide, Vector3 skillPos, int skillId)
         {
+            if (_isEnterSkillCd) return;
             if (sKillGuide == SKillGuideType.Click)
             {
-                _skillCreator.ReleaseSkill(skillId);
+                _skillCreator.ReleaseSkill(skillId,releaseSkillCallback:OnReleaseSkill);
             }
             else if (sKillGuide == SKillGuideType.LongPress)
             {
@@ -79,6 +89,45 @@ namespace ZMUIFrameWork.Scripts.Item
             {
                 // TODO:指定位置技能
             }
+        }
+
+        /// <summary>
+        /// 技能释放回调
+        /// </summary>
+        /// <param name="isReleaseSuccess"></param>
+        public void OnReleaseSkill(bool isReleaseSuccess)
+        {
+            if (isReleaseSuccess)
+            {
+                EnterSkillCd();
+            }
+        }
+
+        /// <summary>
+        /// 进入技能CD
+        /// </summary>
+        public void EnterSkillCd()
+        {
+            cdText.gameObject.SetActive(true);
+            cdMaskImage.gameObject.SetActive(true);
+            _isEnterSkillCd = true;
+            _skillCdTime = _alreadyCdTime = _skillData.SkillCfg.skillCDTimeMS * 1.0f / 1000;
+            cdText.text = _skillCdTime.ToString();
+            int cdTime = _skillData.SkillCfg.skillCDTimeMS / 1000;
+            LogicTimerManager.Instance.DelayCall(1, () =>
+            {
+                cdTime--;
+                if (cdTime <= 0)
+                {
+                    cdText.gameObject.SetActive(false);
+                    cdMaskImage.gameObject.SetActive(false);
+                    _isEnterSkillCd = false;
+                }
+                else
+                {
+                    cdText.text = cdTime.ToString();
+                }
+            },cdTime);
         }
 
         public SKillGuideType GetSkillGuideType(SkillType type)
@@ -97,6 +146,14 @@ namespace ZMUIFrameWork.Scripts.Item
                 skillGuideType = SKillGuideType.Position;
             }
             return skillGuideType;
+        }
+
+        private void Update()
+        {
+            if (_isEnterSkillCd)
+            {
+                cdMaskImage.fillAmount = (_alreadyCdTime -= Time.deltaTime) /_skillCdTime;
+            }
         }
 
         private void OnDestroy()

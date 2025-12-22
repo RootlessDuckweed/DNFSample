@@ -58,25 +58,27 @@ namespace Game.Action
                 ActionFinished = true;
             }
             ActionUpdateCallback?.Invoke();
-            /*FixIntVector3 addDistance = FixIntVector3.zero;
+            FixIntVector3 addDistance = FixIntVector3.zero;
             if (_moveType == MoveType.Target)
             {
-                addDistance = _startPos + _moveDistance * _timeScale;
+                addDistance = _moveDistance * _timeScale;
+                _actionObject.LogicPos = _startPos + addDistance;
             }
             else if(_moveType == MoveType.X)
             {
-                addDistance.x = _actionObject.LogicPos.x * _timeScale;
+                addDistance.x = _moveDistance.x * _timeScale;
+                _actionObject.LogicPos = new FixIntVector3(_startPos.x + addDistance.x,_actionObject.LogicPos.y,_actionObject.LogicPos.z);
             }
             else if(_moveType == MoveType.Y)
             {
-                addDistance.y = _actionObject.LogicPos.y * _timeScale;
+                addDistance.y = _moveDistance.y * _timeScale;
+                _actionObject.LogicPos = new FixIntVector3(_actionObject.LogicPos.x,_startPos.y + addDistance.y,_actionObject.LogicPos.z);
             }
             else if(_moveType == MoveType.Z)
             {
-                addDistance.z = _actionObject.LogicPos.z * _timeScale;
+                addDistance.z = _moveDistance.z * _timeScale;
+                _actionObject.LogicPos = new FixIntVector3(_actionObject.LogicPos.x,_actionObject.LogicPos.y,_startPos.z + addDistance.z);
             }
-            _actionObject.LogicPos = addDistance;*/
-            _actionObject.LogicPos = _startPos + _moveDistance * _timeScale;
         }
 
         /// <summary>

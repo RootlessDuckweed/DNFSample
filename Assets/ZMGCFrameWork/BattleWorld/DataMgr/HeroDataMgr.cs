@@ -22,6 +22,7 @@ namespace ZMGC.Battle
 		 private Dictionary<int,int[]> _heroNormalSkillIdDict = new Dictionary<int,int[]>()
 		 {
 			 {1000,new []{1001,1002,1003}}, // 鬼剑士
+			 {1001,new []{3001,3002,3003,3004}}, // 神枪手
 		 };
 		 
 		 /// <summary>
@@ -30,6 +31,7 @@ namespace ZMGC.Battle
 		 private Dictionary<int,int[]> _heroSkillIdDict = new Dictionary<int,int[]>()
 		 {
 			 {1000,new []{1004,1005,1007,1008,1010,1015}}, // 鬼剑士
+			 {1001,new []{3015,3005,}}, // 神枪手
 		 };
 		 
 		 public  void OnCreate()

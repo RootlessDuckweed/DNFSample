@@ -26,6 +26,9 @@ namespace SkillSystem.EditorWindow
         [TabGroup("SkillComplier","Audio",SdfIconType.OpticalAudio,TextColor = "blue")]
         public List<SkillAudioConfig> audioList = new List<SkillAudioConfig>();
         
+        [TabGroup("SkillComplier","Bullet",SdfIconType.OpticalAudio,TextColor = "cyan")]
+        public List<SkillBulletConfig> bulletList = new List<SkillBulletConfig>();
+        
         [TabGroup("SkillComplier","Action",SdfIconType.Activity,TextColor = "orange")]
         public List<SkillActionConfig> actionList = new List<SkillActionConfig>();
         
@@ -42,7 +45,8 @@ namespace SkillSystem.EditorWindow
         }
         public void SaveSkillData()
         {
-            SkillDataConfig.SaveSkillData(character, skillCfg, damageList, effectList, audioList,actionList);
+            SkillDataConfig.SaveSkillData(character, skillCfg, damageList,
+                effectList, audioList,actionList,bulletList);
             Close();
         }
 
@@ -54,6 +58,7 @@ namespace SkillSystem.EditorWindow
             effectList =skillDataConfig.effectCfgList;
             audioList = skillDataConfig.audioList;
             actionList = skillDataConfig.actionList;
+            bulletList = skillDataConfig.bulletList;
         }
 
         protected override void OnEnable()

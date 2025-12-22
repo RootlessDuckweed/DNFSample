@@ -37,7 +37,17 @@ namespace SkillSystem.Config
         
         [LabelText("逻辑帧数")]
         [BoxGroup("动画数据")]
+        [HideIf("isSetCustomLogicFrame")]
         public int logicFrame = 0;
+        
+        [LabelText("是否自定义逻辑帧数")]
+        [BoxGroup("动画数据")]
+        public bool isSetCustomLogicFrame = false;
+        
+        [LabelText("自定义逻辑帧数")]
+        [BoxGroup("动画数据")]
+        [ShowIf("isSetCustomLogicFrame")]
+        public int customLogicFrame = 0;
         
         [LabelText("动画长度")]
         [BoxGroup("动画数据")]

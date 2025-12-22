@@ -57,7 +57,7 @@ MonoBehaviour:
     radiusHeight: 0
     colliderPosType: 0
     targetType: 2
-    addBuffs: 
+    addBuffs: 2e270000
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1983390214506344, guid: bf7ca15f807f2d6418cde94c17c85eea, type: 3}
@@ -67,7 +67,33 @@ MonoBehaviour:
     effectPosType: 0
     isSetTransformParent: 0
     transformParentType: 0
-    GameEffectObj: {fileID: 0}
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
   - skillEffect: {fileID: 1351735087442694, guid: f33f2e97566a7144794e63ee9b2fa4e2, type: 3}
     triggerFrame: 1
     endFrame: 5
@@ -75,7 +101,33 @@ MonoBehaviour:
     effectPosType: 5
     isSetTransformParent: 1
     transformParentType: 1
-    GameEffectObj: {fileID: 0}
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
   audioList:
   - skillAudio: {fileID: 8300000, guid: 19f00181d5133f342825ca53e5401888, type: 3}
     audioName: Swordsman_liguidj_huidao03
@@ -83,3 +135,4 @@ MonoBehaviour:
     isLoop: 0
     endFrame: 0
   actionList: []
+  bulletList: []

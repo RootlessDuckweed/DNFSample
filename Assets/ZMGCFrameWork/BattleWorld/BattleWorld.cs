@@ -1,4 +1,6 @@
 ﻿using Game.Action;
+using Game.Timer;
+using SkillSystem.Buff;
 using SkillSystem.Config;
 using UnityEngine;
 using ZM.AssetFrameWork;
@@ -27,6 +29,7 @@ namespace ZMGC.Battle
             MonsterLogicCtrl = BattleWorld.GetExitsLogicCtrl<MonsterLogicCtrl>();
             HeroLogicCtrl.InitHero();
             MonsterLogicCtrl.InitMonster();
+            BuffSystem.Instance.OnCreate();
 
             UIModule.PopUpWindow<BattleWindow>();
         }
@@ -62,6 +65,8 @@ namespace ZMGC.Battle
            HeroLogicCtrl.OnLogicFrameUpdate();
            MonsterLogicCtrl.OnLogicFrameUpdate();
            LogicActionController.Instance.OnLogicFrameUpdate();
+           BuffSystem.Instance.OnLogicFrameUpdate();
+           LogicTimerManager.Instance.OnLogicFrameUpdate();
         }
 
         public override void OnDestroy()
@@ -70,6 +75,8 @@ namespace ZMGC.Battle
             HeroLogicCtrl.OnDestroy();
             MonsterLogicCtrl.OnDestroy();
             LogicActionController.Instance.OnDestroy();
+            BuffSystem.Instance.OnDestroy();
+            LogicTimerManager.Instance.OnDestroy();
         }
         
         public override void OnDestroyPostProcess(object args)

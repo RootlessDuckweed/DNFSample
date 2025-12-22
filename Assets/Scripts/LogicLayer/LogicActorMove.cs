@@ -10,6 +10,7 @@ namespace LogicLayer
         private FixIntVector3 _inputMoveDir;
         public void OnLogicFrameUpdateMove()
         {
+            Collider?.UpdateColliderInfo(LogicPos,Collider.Size);
             if (ActionState != LogicObjectActionState.Idle && ActionState != LogicObjectActionState.Move)
             {
                 return;

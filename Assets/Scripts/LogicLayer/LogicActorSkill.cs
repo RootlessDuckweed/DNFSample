@@ -1,7 +1,11 @@
 ﻿//处理逻辑对象技能
 
+using System;
 using System.Collections.Generic;
+using SkillSystem.Buff.BuffInstance;
+using SkillSystem.Config;
 using SkillSystem.Runtime;
+using Tools;
 using ZMGC.Battle;
 
 namespace LogicLayer
@@ -28,6 +32,11 @@ namespace LogicLayer
         /// 正在释放技能的列表
         /// </summary>
         public List<Skill> releasingSkills = new List<Skill>();
+
+        /// <summary>
+        /// 显示正在生效的buff,可以用来显示buff状态栏等,仅用于记录没有逻辑运算，逻辑运算在BuffSystem中
+        /// </summary>
+        private List<Buff> _buffList = new List<Buff>();
         
         /// <summary>
         /// 初始化技能
@@ -35,8 +44,8 @@ namespace LogicLayer
         public void InitActorSkill()
         {
             HeroDataMgr heroData = BattleWorld.GetExitsDataMgr<HeroDataMgr>();
-            _normalSkillIdArr = heroData.GetHeroNormalSkillId(1000);
-            _skillIdArr = heroData.GetHeroSkillId(1000);
+            _normalSkillIdArr = heroData.GetHeroNormalSkillId(1001);
+            _skillIdArr = heroData.GetHeroSkillId(1001);
             _skillSystem = new SkillSystem.Runtime.SkillSystem(this);
             _skillSystem.InitSkills(_normalSkillIdArr);
             _skillSystem.InitSkills(_skillIdArr);
@@ -78,9 +87,16 @@ namespace LogicLayer
         /// 释放技能
         /// </summary>
         /// <param name="skillId"></param>
-        public void ReleaseSkill(int skillId)
+        public void ReleaseSkill(int skillId,Action<bool> releaseSkillCallback = null)
         {
-            Skill releaseSkill = _skillSystem.ReleaseSkill(skillId, OnSkillReleaseAfter, OnSkillReleaseEnd);
+            Skill releaseSkill = _skillSystem.ReleaseSkill(skillId, OnSkillReleaseAfter, (releaseFinishedSkill) =>
+            {
+                if (releaseFinishedSkill.SkillCfg.skillType == SkillType.StockPile)
+                {
+                    releaseSkillCallback?.Invoke(true);
+                }
+                OnSkillReleaseEnd(releaseFinishedSkill);
+            });
             if (releaseSkill != null)
             {
                 releasingSkills.Add(releaseSkill);
@@ -89,11 +105,17 @@ namespace LogicLayer
                     _curNormalComboIndex = 0;
                 }
                 ActionState = LogicObjectActionState.SkillReleasing;
+                if (releaseSkill.SkillCfg.skillType != SkillType.StockPile)
+                {
+                    releaseSkillCallback?.Invoke(true);
+                }
+                else
+                {
+                    releaseSkillCallback?.Invoke(false);
+                }
             }
-            else
-            {
-                ActionState = LogicObjectActionState.Idle;
-            }
+            
+            
         }
 
         private void OnSkillReleaseAfter(Skill skill)
@@ -107,7 +129,7 @@ namespace LogicLayer
             else
             {
                 _curNormalComboIndex++;
-                if (_curNormalComboIndex >= _normalSkillIdArr.Length)
+                if (_curNormalComboIndex >= _normalSkillIdArr.Length || skill.SkillId == _normalSkillIdArr[^1])
                 {
                     _curNormalComboIndex = 0;
                 }
@@ -133,6 +155,35 @@ namespace LogicLayer
         public void OnLogicFrameUpdateSkill()
         {
             _skillSystem.OnLogicFrameUpdate();
+        }
+
+        /// <summary>
+        /// 添加一个buff到记录
+        /// </summary>
+        /// <param name="buff"></param>
+        public void AddBuff(Buff buff)
+        {
+            _buffList.Add(buff);
+        }
+
+        /// <summary>
+        /// 删除buff记录
+        /// </summary>
+        /// <param name="buff"></param>
+        public void RemoveBuff(Buff buff)
+        {
+            if(_buffList.Contains(buff))
+                _buffList.Remove(buff);
+            if (ObjectState == LogicObjectState.Death)
+            {
+                return;
+            }
+
+            // 没有buff，并且不是在起身的状态，则恢复idle动画
+            if (_buffList.Count == 0 && RenderObj.GetCurAnimName() != AnimationName.Anim_Getup)
+            {
+                PlayAnim(AnimationName.Anim_Idle);
+            }
         }
     }
 }

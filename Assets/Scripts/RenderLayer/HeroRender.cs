@@ -70,10 +70,10 @@ namespace RenderLayer
         /// <summary>
         /// 播放动画
         /// </summary>
-        /// <param name="animName"></param>
-        public void PlayAnim(string animName)
+        /// <param name="clipName"></param>
+        public override void PlayAnim(string clipName)
         {
-            anim.CrossFade(animName,0.2f);
+            anim.CrossFade(clipName,0.2f);
         }
 
         public override void PlayAnim(AnimationClip clip)

@@ -3,7 +3,7 @@ using FixIntPhysics;
 using FixMath;
 using LogicLayer;
 using SkillSystem.Config;
-using UnityEngine;
+using SkillSystem.Buff;
 using ZMGC.Battle;
 
 namespace SkillSystem.Runtime
@@ -143,9 +143,15 @@ namespace SkillSystem.Runtime
                 // 造成伤害
                 // TODO : 需要有统一的计算公式，先随便给个数值测试
                 target.SkillDamage(999, skillDamageCfg);
-
-                // TODO:添加buff 
-
+                
+                if (skillDamageCfg.addBuffs != null && skillDamageCfg.addBuffs.Length > 0)
+                {
+                    foreach (var buffId in skillDamageCfg.addBuffs)
+                    {
+                        BuffSystem.Instance.AttachBuff(buffId, _skillCreator, target, this, null);
+                    }
+                }
+                
                 // 添加伤害特效
                 AddHitEffect(target);
                 
@@ -156,10 +162,7 @@ namespace SkillSystem.Runtime
 
         private void AddHitEffect(LogicActor targetObj)
         {
-            if (_skillDataConfig.skillCfg.skillHitEffect != null)
-            {
-                targetObj.OnHit(_skillDataConfig.skillCfg.skillHitEffect,_skillDataConfig.skillCfg.hitEffectSurvivalTimeMs,_skillCreator);
-            }
+            targetObj.OnHit(_skillDataConfig.skillCfg.skillHitEffect,_skillDataConfig.skillCfg.hitEffectSurvivalTimeMs,_skillCreator);
         }
 
         private void DestroyCollider(SkillDamageConfig item)

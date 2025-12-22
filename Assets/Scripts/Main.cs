@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using FixMath;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ZM.AssetFrameWork;
@@ -10,7 +11,6 @@ using ZMGC.Hall;
 public class Main : MonoBehaviour
 {
     public static Main Instance;
-
     
     private void Awake()
     {

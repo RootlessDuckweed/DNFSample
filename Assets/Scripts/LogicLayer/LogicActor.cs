@@ -2,6 +2,7 @@
 using RenderLayer;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
+using SkillSystem.Runtime.Logic;
 using UnityEngine;
 
 namespace LogicLayer
@@ -17,12 +18,14 @@ namespace LogicLayer
         public override void OnLogicFrameUpdate()
         {
             base.OnLogicFrameUpdate();
+            //处理 移动帧
+            OnLogicFrameUpdateMove();
             //处理 技能帧
             OnLogicFrameUpdateSkill();
             //处理 重力帧
             OnLogicFrameUpdateGravity();
-            //处理 移动帧
-            OnLogicFrameUpdateMove();
+            //处理 子弹帧
+            OnLogicFrameUpdateBullet();
         }
 
         public override void OnDestroy()
@@ -35,10 +38,15 @@ namespace LogicLayer
         {
             RenderObj.PlayAnim(clip);
         }
+        
+        public void PlayAnim(string clipName)
+        {
+            RenderObj.PlayAnim(clipName);
+        }
 
         public virtual void SkillDamage(FixInt damage,SkillDamageConfig skillDamageCfg)
         {
-            Debug.Log(RenderObj.name + " - TakeDamage: "+damage);
+            Debug.Log(RenderObj.name + " - SkillDamage: "+damage);
             CalculateDamage(damage,DamageSource.Skill);
         }
 
@@ -54,9 +62,24 @@ namespace LogicLayer
             }
         }
 
-        public void OnHit(GameObject effect,int survivalTimeMs,LogicActor source)
+        public void BulletDamage(FixInt damage,SkillDamageConfig damageCfg)
+        {
+            Debug.Log(RenderObj.name + " - BulletDamage: "+damage);
+            CalculateDamage(damage,DamageSource.Bullet);
+        }
+        
+        public virtual void OnHit(GameObject effect,int survivalTimeMs,LogicObject source)
         {
             RenderObj.OnHit(effect,survivalTimeMs,source);
         }
+        
+        public virtual void OnHitByBullet(GameObject effect,int survivalTimeMs,LogicObject source)
+        {
+            RenderObj.OnHitByBullet(effect,survivalTimeMs,source);
+        }
+
+        public virtual void Floating(bool isUpFloating) { }
+
+        public virtual void TriggerGround() { }
     }
 }

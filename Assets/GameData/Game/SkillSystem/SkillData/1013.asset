@@ -57,7 +57,7 @@ MonoBehaviour:
     radiusHeight: 0
     colliderPosType: 0
     targetType: 2
-    addBuffs: 
+    addBuffs: 204e0000
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1729188287788238, guid: aa20af883426d2a419373f6fbf7bf291, type: 3}

@@ -67,7 +67,7 @@ MonoBehaviour:
       radiusHeight: 0
       colliderPosType: 1
       targetType: 2
-      addBuffs: 
+      addBuffs: 6a270000
       triggerSkillID: 0
     isAttachAction: 1
     actionConfig:
@@ -85,3 +85,4 @@ MonoBehaviour:
     isLoop: 0
     endFrame: 0
   actionList: []
+  bulletList: []
