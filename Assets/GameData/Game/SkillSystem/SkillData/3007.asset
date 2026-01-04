@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
+  m_Name: 3007
+  m_EditorClassIdentifier: 
+  character:
+    skillCharacter: {fileID: 1655574422363594, guid: 6e03e17984fcffe4792b9533f4280fb2, type: 3}
+    skillAnimClip: {fileID: 7400000, guid: b3d7dd53f8cbe104581c6410aff2b1ae, type: 2}
+    animProgress: 100
+    isLoopAnim: 0
+    loopCount: 0
+    logicFrame: 7
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 0
+    animLength: 0.4666667
+    skillDurationMS: 466
+    tempCharacter: {fileID: 0}
+  skillCfg:
+    skillIcon: {fileID: 21300000, guid: 90ee2bf0de9e6d7498dcffd8c9f5387d, type: 3}
+    skillId: 3007
+    skillName: "BBQ\u819D\u649E"
+    needMagicValue: 0
+    skillShakeBeforeTimeMS: 0
+    skillAttackDurationMS: 466
+    skillShakeAfterTimeMS: 466
+    skillCDTimeMS: 13000
+    skillType: 0
+    stockPileStageData: []
+    skillGuideObj: {fileID: 0}
+    skillGuideRange: 0
+    comboBinationSkillID: 0
+    skillHitEffect: {fileID: 0}
+    skillHitEffectPath: 
+    hitEffectSurvivalTimeMs: 100
+    skillHitAudio: {fileID: 0}
+    showSkillPortrait: 0
+    skillPortraitObj: {fileID: 0}
+    skillDes: 
+  damageCfgList:
+  - triggerFrame: 3
+    endFrame: 7
+    triggerIntervalMS: 0
+    isFollowEffect: 0
+    damageType: 2
+    damageRate: 200
+    damageDetectionMode: 1
+    boxSize: {x: 1.2, y: 1.85, z: 1}
+    boxOffset: {x: 0.4, y: 1, z: 0}
+    sphereOffset: {x: 0, y: 0.9, z: 0}
+    radius: 1
+    radiusHeight: 0
+    colliderPosType: 0
+    targetType: 2
+    addBuffs: 767500007775000078750000
+    triggerSkillID: 3008
+  effectCfgList: []
+  audioList:
+  - skillAudio: {fileID: 8300000, guid: a6983060121b71a4c92015adb0ecf73c, type: 3}
+    audioName: gunman_hh_BBQ02
+    triggerFrame: 0
+    isLoop: 0
+    endFrame: 0
+  actionList: []
+  bulletList: []
+  buffList: []

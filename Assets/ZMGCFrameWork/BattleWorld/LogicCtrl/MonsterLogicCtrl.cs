@@ -26,13 +26,15 @@ namespace ZMGC.Battle
 		 public List<Vector3> monsterPosList = new List<Vector3>()
 		 {
 			new Vector3( 0, 0, 0),
-			new Vector3( 1, 0, 0),
+			new Vector3( -2, 0, 0),
+			new Vector3( -2, 0, 3),
 		 };
 
 		 public int[] monsterIDArr = new[]
 		 {
 			 20001,
 			 20005,
+			 30001,
 		 };
 	
 		 public  void OnCreate()
@@ -54,7 +56,6 @@ namespace ZMGC.Battle
 				 var monsterBox = new FixIntBoxCollider(boxInfo.mSize, boxInfo.mSize);
 				 monsterBox.SetBoxData(boxInfo.mConter,boxInfo.mSize);
 				 
-				 //TODO:后续需要修改
 				 monsterBox.UpdateColliderInfo(initPos,new FixIntVector3(boxInfo.mSize));
 				 
 				 // 创建怪物逻辑层与渲染层

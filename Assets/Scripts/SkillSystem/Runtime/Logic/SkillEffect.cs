@@ -4,6 +4,7 @@ using SkillSystem.Config;
 using SkillSystem.Runtime.Logic;
 using SkillSystem.Runtime.Render;
 using UnityEngine;
+using ZM.AssetFrameWork;
 
 namespace SkillSystem.Runtime
 {
@@ -25,16 +26,19 @@ namespace SkillSystem.Runtime
                             parent = _skillCreator.RenderObj.GetEffectParent(item.transformParentType);
                         }
                         //TODO : 特效生成后续修改成其他方式 现在用这个方法只是为了测试
-                        var gameEffectObj = GameObject.Instantiate(item.skillEffect,parent);
+                        /*var gameEffectObj = GameObject.Instantiate(item.skillEffect,parent);
                         gameEffectObj.transform.localPosition = Vector3.zero;
-                        gameEffectObj.transform.localScale = Vector3.one;
+                        gameEffectObj.transform.localScale = Vector3.one;*/
+                        var gameEffectObj = ZMAssetsFrame.Instantiate(item.skillEffectPath, parent, Vector3.zero, Vector3.one,
+                            Quaternion.identity);
+                        gameEffectObj.transform.localEulerAngles = Vector3.zero;
                         SkillEffectRender effectRender = gameEffectObj.GetComponent<SkillEffectRender>();
                         if (effectRender == null)
                         {
                             effectRender = gameEffectObj.AddComponent<SkillEffectRender>();
                         }
                         SkillEffectLogic effectLogic =
-                            new SkillEffectLogic(LogicObjectType.Effect, item, effectRender, _skillCreator);
+                            new SkillEffectLogic(LogicObjectType.Effect, item, effectRender, _skillCreator,this);
                         effectRender.SetLogicObject(effectLogic,item.effectPosType!=EffectPosType.Zero);
                         _gameEffectObjDic.Add(item.GetHashCode(), effectLogic);
                     }
@@ -44,11 +48,11 @@ namespace SkillSystem.Runtime
                        DestroyEffect(item);
                        continue;
                     }
-
                     if (_gameEffectObjDic.TryGetValue(item.GetHashCode(), out var effect) && effect != null)
                     {
                         effect.OnLogicFrameEffectUpdate(this,_curLogicFrame);
                     }
+
                 }
             }
             

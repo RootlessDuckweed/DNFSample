@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using FixMath;
 using LogicLayer;
 using SkillSystem.Config;
 using UnityEngine;
@@ -44,6 +46,8 @@ namespace SkillSystem.Runtime
         public Action<Skill, bool> OnReleaseSkillEnd;
 
         public SkillState State { get; protected set; } = SkillState.None;
+
+        public List<SkillDamageConfig> DamageCfgList => _skillDataConfig.damageCfgList; 
         
         private int _curLogicFrame = 0;
         private int _curLogicFrameAccTime = 0;
@@ -51,6 +55,12 @@ namespace SkillSystem.Runtime
         /// 是否自动匹配蓄力阶段
         /// </summary>
         private bool _autoMatchStockStage;
+        /// <summary>
+        /// 组合技能ID
+        /// </summary>
+        private int _comboBinationSkillId = 0;
+
+        public FixIntVector3 SkillGuidePos;
 
         public Skill(int skillId, LogicActor skillCreator)
         {
@@ -64,10 +74,11 @@ namespace SkillSystem.Runtime
         /// <summary>
         /// 释放技能
         /// </summary>
-        public void ReleaseSkill(Action<Skill> releaseSkillAfter, Action<Skill, bool> releaseSkillEnd)
+        public void ReleaseSkill(Action<Skill> releaseSkillAfter, FixIntVector3 guidePos,Action<Skill, bool> releaseSkillEnd)
         {
             OnReleaseSkillAfter = releaseSkillAfter;
             OnReleaseSkillEnd = releaseSkillEnd;
+            SkillGuidePos = guidePos;
             SkillStart();
             State = SkillState.Before;
             PlayAnim();
@@ -88,11 +99,13 @@ namespace SkillSystem.Runtime
             _curLogicFrame = 0;
             _curLogicFrameAccTime = 0;
             _autoMatchStockStage = false;
+            _comboBinationSkillId = _skillDataConfig.skillCfg.comboBinationSkillID;
             if (_skillDataConfig.character.isSetCustomLogicFrame)
             {
                 _skillDataConfig.character.logicFrame = _skillDataConfig.character.customLogicFrame;
             }
             OnBulletInit();
+            OnDamageInit();
         }
 
         /// <summary>
@@ -110,9 +123,10 @@ namespace SkillSystem.Runtime
             OnReleaseSkillEnd?.Invoke(this, false);
             ReleaseAllEffect();
             OnBulletRelease();
-            if (_skillDataConfig.skillCfg.comboBinationSkillID != 0)
+            OnDamageRelease();
+            if (_comboBinationSkillId != 0)
             {
-                _skillCreator.ReleaseSkill(_skillDataConfig.skillCfg.comboBinationSkillID);
+                _skillCreator.ReleaseSkill(_comboBinationSkillId);
             }
             
         }
@@ -143,6 +157,8 @@ namespace SkillSystem.Runtime
             OnLogicFrameUpdateAction();
             // 子弹射击逻辑帧
             OnLogicFrameUpdateBullet();
+            // 附加给自己的buff逻辑帧
+            OnLogicFrameUpdateBuff();
             
             // 蓄力技能通过蓄力时间进行触发，与结束帧无关
             if (_skillDataConfig.skillCfg.skillType == SkillType.StockPile)
@@ -177,6 +193,11 @@ namespace SkillSystem.Runtime
                 {
                     SkillEnd();
                 }
+            }
+
+            if (_skillDataConfig.skillCfg.showSkillPortrait && _curLogicFrame == 0)
+            {
+                _skillCreator.RenderObj.ShowSkillPortrait(_skillDataConfig.skillCfg.skillPortraitObj);
             }
             
             _curLogicFrame++;

@@ -11,7 +11,7 @@ namespace LogicLayer
         public void OnLogicFrameUpdateMove()
         {
             Collider?.UpdateColliderInfo(LogicPos,Collider.Size);
-            if (ActionState != LogicObjectActionState.Idle && ActionState != LogicObjectActionState.Move)
+            if (ActionState != LogicObjectActionState.Idle && ActionState != LogicObjectActionState.Move && !IsForceAllowMove )
             {
                 return;
             }
@@ -25,7 +25,7 @@ namespace LogicLayer
             }
             
             //对象的朝向轴向
-            if (LogicDir.x != FixInt.Zero)
+            if (LogicDir.x != FixInt.Zero && !IsForceAllowModifyDir)
             {
                 LogicXAxis = _inputMoveDir.x > 0 ? 1 : -1;
             }

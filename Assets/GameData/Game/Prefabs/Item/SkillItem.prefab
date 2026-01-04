@@ -268,7 +268,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6974770262309250659
 MonoBehaviour:
@@ -285,7 +285,7 @@ MonoBehaviour:
   mJoyPointTrans: {fileID: 4603604787765163222}
   mJoyBackTrans: {fileID: 9118181215204556173}
   mCancelSkillTrans: {fileID: 7442586592349918890}
-  mJoyPointMaxDir: 0
+  mJoyPointMaxDir: 90
 --- !u!222 &7141953018892656148
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -8034359363308660761, guid: 4ba5b2c7920a8b749bdbbe6c911a4b35, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 3353827485934617291}
   - component: {fileID: 7925976948516212313}
   m_Layer: 5
-  m_Name: TriggerArea
+  m_Name: CancelTriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

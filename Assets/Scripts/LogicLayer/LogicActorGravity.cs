@@ -13,6 +13,12 @@ namespace LogicLayer
         protected FixIntVector3 Velocity;
         public bool IsAddForce;
         protected FixInt RisingTime;
+        private bool _isIgnoreGravity;
+        public bool IsIgnoreGravity
+        {
+            get => _isIgnoreGravity;
+            set => _isIgnoreGravity = value;
+        }
         /// <summary>
         /// 初始速度y的速度
         /// </summary>
@@ -25,11 +31,17 @@ namespace LogicLayer
                 FixInt gt = Gravity * logicFrameIntervalFix;
                 FixInt risingForceTime = (_vo / gt) * logicFrameIntervalFix;
                 FixInt timeScale = (risingForceTime * 2) / RisingTime;
+                
                 Velocity.y -= Gravity * logicFrameIntervalFix * timeScale;
+                
+                //如果忽略重力，则不进行重力的位置更新
                 FixIntVector3 newPos = new FixIntVector3(LogicPos.x, FixIntMath.Clamp(LogicPos.y + Velocity.y * logicFrameIntervalFix,0,FixInt.MaxValue), LogicPos.z);
+                if (!_isIgnoreGravity)
+                {
+                    LogicPos = newPos;
+                }
                 if (newPos.y <= 0)
                 {
-                    Debug.Log("AddRisingForceEnd:" + Time.realtimeSinceStartup);
                     IsAddForce = false;
                     TriggerGround();
                 }
@@ -44,7 +56,7 @@ namespace LogicLayer
                         Floating(false);
                     }
                 }
-                LogicPos = newPos;
+
             }
         }
 

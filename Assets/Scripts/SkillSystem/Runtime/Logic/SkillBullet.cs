@@ -4,6 +4,7 @@ using SkillSystem.Config;
 using SkillSystem.Runtime.Logic;
 using SkillSystem.Runtime.Render;
 using UnityEngine;
+using ZM.AssetFrameWork;
 
 namespace SkillSystem.Runtime
 {
@@ -15,14 +16,14 @@ namespace SkillSystem.Runtime
         /// <summary>
         /// 初始化子弹相关的数据
         /// </summary>
-        public void OnBulletInit()
+        private void OnBulletInit()
         {
             _logicRandom =  new LogicRandom(10);
             if (_skillDataConfig.bulletList is { Count: > 0 })
             {
                 for (int i = 0; i < _skillDataConfig.bulletList.Count; i++)
                 {
-                    _curCreateBulletAccTimeList.Add(i);
+                    _curCreateBulletAccTimeList.Add(0);
                 }
             }
         }
@@ -66,7 +67,8 @@ namespace SkillSystem.Runtime
         private void CreateBullet(SkillBulletConfig config)
         {
             // 简单创建，减少对框架依赖，目的是为移植简单
-            GameObject bulletObj = GameObject.Instantiate(config.bulletPrefab);
+            //GameObject bulletObj = GameObject.Instantiate(config.bulletPrefab);
+            GameObject bulletObj = ZMAssetsFrame.Instantiate(config.bulletPrefabPath, null);
             
             //绑定逻辑层和渲染层
             SkillBulletRender bulletRender = bulletObj.GetComponent<SkillBulletRender>();

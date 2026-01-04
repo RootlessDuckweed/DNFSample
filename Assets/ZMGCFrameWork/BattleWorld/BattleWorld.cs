@@ -1,4 +1,5 @@
-﻿using Game.Action;
+﻿using Config;
+using Game.Action;
 using Game.Timer;
 using SkillSystem.Buff;
 using SkillSystem.Config;
@@ -25,13 +26,14 @@ namespace ZMGC.Battle
         public override void OnCreate()
         {
             base.OnCreate();
+            ConfigCenter.Instance.InitGameCfg();
             HeroLogicCtrl = BattleWorld.GetExitsLogicCtrl<HeroLogicCtrl>();
             MonsterLogicCtrl = BattleWorld.GetExitsLogicCtrl<MonsterLogicCtrl>();
             HeroLogicCtrl.InitHero();
             MonsterLogicCtrl.InitMonster();
             BuffSystem.Instance.OnCreate();
-
             UIModule.PopUpWindow<BattleWindow>();
+            AudioController.GetInstance().PlayMusicFade(AssetPathConfig.GAME_AUDIO_PATH+"BG/jizhou.mp3",2);
         }
 
         /// <summary>

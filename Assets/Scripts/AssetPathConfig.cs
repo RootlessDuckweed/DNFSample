@@ -9,4 +9,12 @@
     public const string SKILL_DATA_CONFIG = GAME + "SkillSystem/SkillData/";
     public const string DAMAGE_TEXT = GAME_PREFABS+"DamageItem/DamageText";
     public const string BUFF_DATA = GAME + "SkillSystem/BuffData/";
+    public const string GAME_AUDIO_PATH = GAME + "Sound/";
+    public const string GAME_DATA_PATH = GAME + "Data/";
+    public const string GAME_TEXTURES_PATH = GAME + "Textures/";
+    public const string HALL_TEXTURES_PATH = HALL + "Textures/";
+    public const string HALL_PREFABS = HALL + "Prefabs/";
+    public const string HALL_PREFABS_ITEM = HALL_PREFABS + "Item/";
+    public const string HALL_EFFECTS = HALL + "Effects/";
+    
 }

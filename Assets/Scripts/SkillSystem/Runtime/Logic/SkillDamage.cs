@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FixIntPhysics;
 using FixMath;
+using Game;
 using LogicLayer;
 using SkillSystem.Config;
 using SkillSystem.Buff;
@@ -21,30 +22,42 @@ namespace SkillSystem.Runtime
     public partial class Skill
     {
         private Dictionary<int, ColliderBehaviour> _colliderDic = new Dictionary<int, ColliderBehaviour>();
-        private int _curDamageAccTime; // 当前伤害累加时间
+        private List<int> _curCreateDamageAccTimeList = new List<int>(); // 当前伤害累加时间
 
+        private void OnDamageInit()
+        {
+            if (_skillDataConfig.damageCfgList is { Count: > 0 })
+            {
+                for (int i = 0; i < _skillDataConfig.damageCfgList.Count; i++)
+                {
+                    _curCreateDamageAccTimeList.Add(0);
+                }
+            }
+        }
         public void OnLogicFrameUpdateDamage()
         {
             if (_skillDataConfig.damageCfgList != null && _skillDataConfig.damageCfgList.Count > 0)
             {
-                foreach (var item in _skillDataConfig.damageCfgList)
+                for (int i = 0; i < _skillDataConfig.damageCfgList.Count; i++)
                 {
+                    var item = _skillDataConfig.damageCfgList[i];
                     int hashCode = item.GetHashCode();
                     
                     // 更新碰撞体位置，如果是跟随玩家位置
                     if (item.colliderPosType == ColliderPosType.FollowPos)
                     {
-                        if (_colliderDic.TryGetValue(item.GetHashCode(), out var damageCollider) && damageCollider!= null)
+                        if (_colliderDic.TryGetValue(item.GetHashCode(), out var damageCollider) &&
+                            damageCollider != null)
                         {
                             CreateOrUpdateCollider(item, damageCollider);
                         }
                     }
-                    
+
                     // 正常创建碰撞体，如果到了触发帧
                     if (_curLogicFrame == item.triggerFrame)
                     {
                         DestroyCollider(item);
-                        ColliderBehaviour collider = CreateOrUpdateCollider(item,null);
+                        ColliderBehaviour collider = CreateOrUpdateCollider(item, null);
                         _colliderDic.Add(hashCode, collider);
                         if (item.triggerIntervalMS == 0)
                         {
@@ -58,11 +71,11 @@ namespace SkillSystem.Runtime
 
                     if (item.triggerIntervalMS != 0)
                     {
-                        _curDamageAccTime += LogicFrameConfig.LogicFrameIntervalMs;
-                        if (_curDamageAccTime >= item.triggerIntervalMS)
+                        _curCreateDamageAccTimeList[i] += LogicFrameConfig.LogicFrameIntervalMs;
+                        if (_curCreateDamageAccTimeList[i] >= item.triggerIntervalMS)
                         {
                             // 触发一次伤害
-                            _curDamageAccTime = 0;
+                            _curCreateDamageAccTimeList[i] = 0;
                             if (_colliderDic.ContainsKey(hashCode))
                             {
                                 TriggerColliderDamage(_colliderDic[hashCode], item);
@@ -142,7 +155,7 @@ namespace SkillSystem.Runtime
             {
                 // 造成伤害
                 // TODO : 需要有统一的计算公式，先随便给个数值测试
-                target.SkillDamage(999, skillDamageCfg);
+                target.SkillDamage(DamageCalculateCenter.CalculateDamage(skillDamageCfg,_skillCreator,target), skillDamageCfg,_skillCreator);
                 
                 if (skillDamageCfg.addBuffs != null && skillDamageCfg.addBuffs.Length > 0)
                 {
@@ -153,16 +166,26 @@ namespace SkillSystem.Runtime
                 }
                 
                 // 添加伤害特效
-                AddHitEffect(target);
+                AddHitEffect(target,_skillCreator);
                 
                 // 播放击中音效
                 PlayHitAudio();
             }
+            //处理造成伤害后触发的技能
+            if (damageTargetList.Count > 0) // 说明打中了敌人造成了伤害
+            {
+                // 触发对应技能
+                if (skillDamageCfg.triggerSkillID != 0)
+                {
+                    _comboBinationSkillId = skillDamageCfg.triggerSkillID;
+                    
+                }
+            }
         }
 
-        private void AddHitEffect(LogicActor targetObj)
+        private void AddHitEffect(LogicActor targetObj,LogicActor sourceObj)
         {
-            targetObj.OnHit(_skillDataConfig.skillCfg.skillHitEffect,_skillDataConfig.skillCfg.hitEffectSurvivalTimeMs,_skillCreator);
+            targetObj.OnHit(_skillDataConfig.skillCfg.skillHitEffectPath,_skillDataConfig.skillCfg.hitEffectSurvivalTimeMs,sourceObj,targetObj);
         }
 
         private void DestroyCollider(SkillDamageConfig item)
@@ -174,6 +197,11 @@ namespace SkillSystem.Runtime
                 _colliderDic.Remove(hashCode);
                 collider.OnRelease();
             }
+        }
+        
+        public void OnDamageRelease()
+        {
+            _curCreateDamageAccTimeList.Clear();
         }
     }
 }

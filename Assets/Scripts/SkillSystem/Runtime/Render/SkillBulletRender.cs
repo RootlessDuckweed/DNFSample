@@ -2,6 +2,7 @@
 using RenderLayer;
 using SkillSystem.Config;
 using UnityEngine;
+using ZM.AssetFrameWork;
 
 namespace SkillSystem.Runtime.Render
 {
@@ -27,7 +28,8 @@ namespace SkillSystem.Runtime.Render
         public override void OnRelease()
         {
             base.OnRelease();
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            ZMAssetsFrame.Release(gameObject);
         }
     }
 }

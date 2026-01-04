@@ -4,6 +4,7 @@ using SkillSystem.Buff.BuffCfg;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
 using Tools;
+using UnityEngine;
 using ZM.AssetFrameWork;
 
 namespace SkillSystem.Buff.BuffInstance
@@ -60,7 +61,10 @@ namespace SkillSystem.Buff.BuffInstance
         /// buff逻辑组合对象
         /// </summary>
         private BuffComposite _buffLogic;
-
+        /// <summary>
+        /// buff渲染对象
+        /// </summary>
+        private BuffRender _buffRender;
         /// <summary>
         /// 当前真实运行时间
         /// </summary>
@@ -85,19 +89,38 @@ namespace SkillSystem.Buff.BuffInstance
             // 加载buff配置文件
             BuffCfg = ZMAssetsFrame.LoadScriptableObject<BuffConfig>(AssetPathConfig.BUFF_DATA+BuffID+".asset");
 
-            if (BuffCfg.buffType == BuffTypeEnum.Repel)
+            if (BuffCfg.buffType == BuffType.Repel)
             {
                 _buffLogic = new RepelBuff(this);
             }
-            else if(BuffCfg.buffType == BuffTypeEnum.Floating)
+            else if(BuffCfg.buffType == BuffType.Floating)
             {
                 _buffLogic = new FloatingBuff(this);
             }
-            else if (BuffCfg.buffType == BuffTypeEnum.Stiff)
+            else if (BuffCfg.buffType == BuffType.Stiff)
             {
                 _buffLogic = new StiffBuff(this);
             }
-            
+            else if (BuffCfg.buffType == BuffType.HpModifyGroup)
+            {
+                _buffLogic = new AttributeModifyBuffGroup(this);
+            }
+            else if (BuffCfg.buffType == BuffType.Grab)
+            {
+                _buffLogic = new GrabBuff(this);
+            }
+            else if (BuffCfg.buffType == BuffType.IgnoreGravity)
+            {
+                _buffLogic = new IgnoreGravityBuff(this);
+            }
+            else if (BuffCfg.buffType == BuffType.MoveSpeedModifySingle)
+            {
+                _buffLogic = new AttributeModifyBuffSingle(this);
+            }
+            else if (BuffCfg.buffType == BuffType.AllowMove || BuffCfg.buffType == BuffType.NotAllowDir)
+            {
+                _buffLogic = new StatusModifyBuffSingle(this);
+            }
             
             State = BuffCfg.buffDelay == 0 ? BuffState.Start : BuffState.Delay;
             _curDeyTime = BuffCfg.buffDelay;
@@ -146,6 +169,8 @@ namespace SkillSystem.Buff.BuffInstance
         {
             _buffLogic.BuffStart();
             AttachTarget.AddBuff(this);
+            CreateBuffEffect();
+            _buffRender?.InitBuffRender(Releaser,AttachTarget,BuffCfg,Skill.SkillGuidePos);
         }
 
         public void BuffTrigger()
@@ -162,11 +187,11 @@ namespace SkillSystem.Buff.BuffInstance
                     AttachTarget.PlayAnim(AnimationName.Anim_Beiji_02);
                     break;
             }
-            // 处理buff需要播放的音效
+            /*// 处理buff需要播放的音效
             if (BuffCfg.buffAudio != null)
             {
                 AudioController.GetInstance().PlaySoundByAudioClip(BuffCfg.buffAudio,false,2);
-            }
+            }*/
         }
 
         private void UpdateBuffLogic()
@@ -180,7 +205,7 @@ namespace SkillSystem.Buff.BuffInstance
                 if (_curRealRuntime >= BuffCfg.buffIntervalMs)
                 {
                     _buffLogic.BuffTrigger();
-                    _curRealRuntime -= logicFrameIntervalMs;
+                    _curRealRuntime -= BuffCfg.buffIntervalMs;
                 }
                
             }
@@ -198,8 +223,31 @@ namespace SkillSystem.Buff.BuffInstance
             }
         }
 
+        /// <summary>
+        /// 创建buff特效
+        /// </summary>
+        public BuffRender CreateBuffEffect()
+        {
+            //读取buff effect 配置
+            if (BuffCfg.effectConfig != null &&  BuffCfg.effectConfig.effect!=null)
+            {
+                //GameObject buffEffect = GameObject.Instantiate(BuffCfg.effectConfig.effect);
+                GameObject buffEffect = ZMAssetsFrame.Instantiate(BuffCfg.effectConfig.effectPath, null);
+                _buffRender = buffEffect.GetComponent<BuffRender>();
+                if (_buffRender == null)
+                {
+                    _buffRender = buffEffect.AddComponent<BuffRender>();
+                }
+
+                return _buffRender;
+            }
+
+            return null;
+        }
+
         public void OnDestroy()
         {
+            _buffRender?.OnRelease();
             _buffLogic.BuffEnd();
             AttachTarget.RemoveBuff(this);
             SkillSystem.Buff.BuffSystem.Instance.RemoveBuff(this);

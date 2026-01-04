@@ -1,4 +1,6 @@
 ﻿using System;
+using FixMath;
+using Game.Timer;
 using LogicLayer;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
@@ -90,38 +92,57 @@ namespace RenderLayer
             return string.Empty;
         }
 
-
-        public virtual void Damage(int damageValue,DamageSource damageSource)
+        /// <summary>
+        /// 造成伤害扣血的渲染表现
+        /// </summary>
+        /// <param name="damageValue"></param>
+        /// <param name="damageSource"></param>
+        /// <param name="source"></param>
+        public virtual void Damage(int damageValue,DamageSource damageSource,LogicObject source)
         {
             GameObject damageText = ZMAssetsFrame.Instantiate(AssetPathConfig.DAMAGE_TEXT, null);
             var item = damageText.GetComponent<DamageTextItem>();
             item.ShowDamageText(damageValue, this);
+           
         }
-
-        public virtual void OnHit(GameObject effect, int survivalTimeMs, LogicObject source)
+        /// <summary>
+        /// 受到伤害的渲染表现
+        /// </summary>
+        /// <param name="effectPath">特效</param>
+        /// <param name="survivalTimeMs">特效存活时间</param>
+        /// <param name="source">伤害源</param>
+        /// <param name="effectPoint">受击特效生成附着对象</param>
+        public virtual void OnHit(string effectPath, int survivalTimeMs, LogicObject source,LogicObject effectPoint)
         {
-            if (effect != null)
+            if (!string.IsNullOrEmpty(effectPath))
             {
-                GameObject hitEffectObj = GameObject.Instantiate(effect);
-                hitEffectObj.transform.position = transform.position;
-                hitEffectObj.transform.localScale = source.LogicXAxis > 0 ? Vector3.one : new Vector3(-1, 1, 1);
+                var hitEffectObj = ZMAssetsFrame.Instantiate(effectPath, null);
+                hitEffectObj.transform.position = effectPoint.RenderObj.transform.position;
                 Destroy(hitEffectObj,survivalTimeMs*1.0f/1000f);
-            }
-        }
-        public virtual void OnHitByBullet(GameObject effect, int survivalTimeMs, LogicObject source)
-        {
-            if (effect != null)
-            {
-                GameObject hitEffectObj = GameObject.Instantiate(effect);
-                hitEffectObj.transform.position = source.RenderObj.transform.position;
-                hitEffectObj.transform.localScale = source.LogicXAxis > 0 ? Vector3.one : new Vector3(-1, 1, 1);
-                Destroy(hitEffectObj,survivalTimeMs*1.0f/1000f);
+                LogicTimerManager.Instance.DelayCall(new FixInt(survivalTimeMs) / new FixInt(1000), () =>
+                {
+                    ZMAssetsFrame.Release(hitEffectObj);
+                });
             }
         }
         
         public virtual Transform GetEffectParent(TransformParentType type)
         {
             return null;
+        }
+
+        public virtual void ShowSkillPortrait(GameObject portrait)
+        {
+            if (portrait != null)
+            {
+                GameObject por = GameObject.Instantiate(portrait);
+                Destroy(por,3);
+            }
+        }
+
+        public virtual void OnDeath()
+        {
+            LogicObj.ObjectState = LogicObjectState.Death;
         }
     }
 }

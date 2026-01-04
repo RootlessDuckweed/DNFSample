@@ -12,9 +12,11 @@ namespace SkillSystem.Config
     {
         [LabelText("技能特效")]
         [AssetList]
-        [PreviewField(70, ObjectFieldAlignment.Left)]
+        [PreviewField(70, ObjectFieldAlignment.Left),OnValueChanged("GetObjectPath")]
         public GameObject skillEffect;
 
+        [ReadOnly] public string skillEffectPath;
+        
         [LabelText("触发帧")]
         public int triggerFrame;
 
@@ -39,23 +41,13 @@ namespace SkillSystem.Config
         [ToggleGroup("isAttachDamage","是否附加伤害")]
         public SkillDamageConfig damageConfig;
 
-        [ToggleGroup("isAttachAction", "是否附加行动(当特效位置类型为 跟随角色方向 起作用)"),ShowIf("EnableAttachAction")]
+        [ToggleGroup("isAttachAction", "是否附加行动(当特效位置类型为 跟随角色方向或者引导位置 起作用)"),ShowIf("EnableAttachAction")]
         public bool isAttachAction;
 
         [ToggleGroup("isAttachAction","是否附加行动"),ShowIf("EnableAttachAction")]
         public SkillActionConfig actionConfig;
         
-        private bool EnableAttachAction
-        {
-            get
-            {
-                if (effectPosType != EffectPosType.FollowDir)
-                {
-                    isAttachAction = false;
-                }
-                return effectPosType == EffectPosType.FollowDir;
-            }
-        }
+        private bool EnableAttachAction => effectPosType is EffectPosType.FollowDir or EffectPosType.GuidePos;
 
 #if UNITY_EDITOR
         
@@ -63,7 +55,11 @@ namespace SkillSystem.Config
         private int _curLogicFrame;
         private AnimationAgent _animationAgent;
         private ParticleAgent _particleAgent;
-        
+
+        public void GetObjectPath(GameObject obj)
+        {
+           skillEffectPath = UnityEditor.AssetDatabase.GetAssetPath(obj);
+        }
             
         public void StartPlaySkill()
         {

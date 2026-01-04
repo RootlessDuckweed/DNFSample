@@ -6,11 +6,17 @@
 * Modify:
 * 注意:以下文件为自动生成，强制再次生成将会覆盖
 ----------------------------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+
 namespace ZMGC.Hall
 {
 	public  class UserDataMgr : IDataBehaviour
 	{
 		 public string UserName;
+		 public int RoleId;
+		 public List<int> CreateRoleIdList { get; private set; } =  new List<int>(){1000,1001};
+
 		 public  void OnCreate()
 		 {
 			

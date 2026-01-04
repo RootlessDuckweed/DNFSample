@@ -7,6 +7,9 @@
 ---------------------------------*/
 
 using System.Collections.Generic;
+using Config;
+using FixMath;
+using Game.Item;
 using LogicLayer.Hero;
 using SkillSystem.Runtime;
 using UnityEngine.UI;
@@ -25,7 +28,8 @@ public class BattleWindow:WindowBase
 		 private readonly List<Transform> _skillItemRootList = new List<Transform>();
 		 //技能按钮列表
 		 private readonly List<SkillItem>  _skillItemList = new List<SkillItem>();
-		 
+		 private float _lastShowBloodTime = 0;
+		 private MonsterBloodItem _curBloodItem;
 		 #region 声明周期函数
 		 //调用机制与Mono Awake一致
 		 public override void OnAwake()
@@ -70,7 +74,44 @@ public class BattleWindow:WindowBase
 		 }
 		 #endregion
 		 #region API Function
-		    
+
+		 /// <summary>
+		 /// 显示怪物血条
+		 /// </summary>
+		 /// <param name="monsterCfg">怪物配置</param>
+		 /// <param name="insId">对象ID</param>
+		 /// <param name="curHp">怪物当前血量</param>
+		 /// <param name="damageHp">伤害量</param>
+		 public void ShowMonsterDamage(MonsterCfg monsterCfg,int insId,FixInt curHp,FixInt damageHp)
+		 {
+			 if (_curBloodItem != null&&_curBloodItem.curShowMonsterInsId == insId)
+			 {
+				 _lastShowBloodTime = Time.realtimeSinceStartup;
+				 _curBloodItem.Damage(-damageHp.RawInt);
+				 return;
+			 }
+
+			 //血条冷却
+			 if (monsterCfg.type != MonsterType.Boss&&Time.realtimeSinceStartup-_lastShowBloodTime <=0.5f)
+			 {
+				 return;
+			 }
+
+			 //回收回对象池
+			 if (_curBloodItem!=null)
+			 {
+				 ZMAssetsFrame.Release(_curBloodItem.gameObject);
+				 _curBloodItem = null;
+			 }
+			 
+			 string bloodName = monsterCfg.type == MonsterType.Boss ? "BossBlood" : "MonsterBlood";
+			 GameObject itemObj = ZMAssetsFrame.Instantiate(AssetPathConfig.GAME_PREFABS + "DamageItem/" + bloodName,
+				 dataCompt.BloodRootTransform, Vector3.zero, Vector3.one, Quaternion.identity);
+			 _curBloodItem = itemObj.GetComponent<MonsterBloodItem>();
+			 _curBloodItem.InitBloodData(monsterCfg,curHp.RawInt,insId);
+			 _curBloodItem.Damage(-damageHp.RawInt);
+			 _lastShowBloodTime = Time.realtimeSinceStartup;
+		 }   
 		 #endregion
 		 #region UI组件事件
 		 public void OnNormalAttackButtonClick()

@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
 public enum WorldEnum
 {
     LoginWorld,
@@ -42,6 +42,11 @@ public class WorldManager
     /// <typeparam name="T"></typeparam>
     public static void CreateWorld<T>() where T: World,new ()
     {
+        if (DefaultGameWorld!=null && DefaultGameWorld.GetType().Name == typeof(T).Name)
+        {
+            Debug.LogError($"重复构建：{typeof(T).Name} 世界");
+            return;
+        }
         T world = new T();
         DefaultGameWorld = world;
         //初始化当前游戏世界的程序集脚本

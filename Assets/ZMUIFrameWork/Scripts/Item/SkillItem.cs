@@ -2,6 +2,7 @@
 using FixMath;
 using Game.Timer;
 using LogicLayer;
+using RenderLayer;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace ZMUIFrameWork.Scripts.Item
         private float _alreadyCdTime;
         //技能冷却时间
         private float _skillCdTime;
+        private HeroRender _heroRender;
         /// <summary>
         /// 设置技能设置
         /// </summary>
@@ -38,11 +40,11 @@ namespace ZMUIFrameWork.Scripts.Item
             }
             _skillData = skillData;
             _skillCreator = logicActor;
+            _heroRender = logicActor.RenderObj as HeroRender;
             skillJoyStick.InitSkillData(GetSkillGuideType(skillData.SkillCfg.skillType),skillData.SkillId,skillData.SkillCfg.skillGuideRange);
             skillJoyStick.OnReleaseSkill += OnTriggerSkill;
             skillJoyStick.OnSkillGuide += OnUpdateSkillGuide;
             iconImage.sprite = skillData.SkillCfg.skillIcon;
-            //TODO:后期需要添加冷却修改
             cdText.gameObject.SetActive(false);
             cdMaskImage.gameObject.SetActive(false);
         }
@@ -57,14 +59,14 @@ namespace ZMUIFrameWork.Scripts.Item
         /// <param name="skillDirDis">技能半径距离</param>
         private void OnUpdateSkillGuide(SKillGuideType sKillGuide, bool isCancel, Vector3 skillPos, int skillId, float skillDirDis)
         {
-            if (_isEnterSkillCd) return;
             if (sKillGuide == SKillGuideType.LongPress)
             {
+                if (_isEnterSkillCd) return;
                 _skillCreator.ReleaseSkill(skillId,releaseSkillCallback:OnReleaseSkill);
             }
             else if (sKillGuide == SKillGuideType.Position)
             {
-                
+                _heroRender.UpdateSkillGuide(sKillGuide,skillId,isCancel,skillPos,skillDirDis);
             }
         }
 
@@ -88,6 +90,9 @@ namespace ZMUIFrameWork.Scripts.Item
             else if (sKillGuide == SKillGuideType.Position)
             {
                 // TODO:指定位置技能
+                skillPos.y = 0;
+                _skillCreator.ReleaseSkill(skillId,_skillCreator.LogicPos + new FixIntVector3(skillPos),releaseSkillCallback:OnReleaseSkill);
+                _heroRender.OnGuideRelease();
             }
         }
 

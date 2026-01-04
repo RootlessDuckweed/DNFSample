@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using RenderLayer;
 using UnityEngine.UI;
+using ZM.AssetFrameWork;
+
 public class DamageTextItem : MonoBehaviour
 {
     public Text text;
@@ -14,6 +16,7 @@ public class DamageTextItem : MonoBehaviour
   
     public void ShowDamageText(int damageValue,RenderObject target)
     {
+        text.color = Color.white;
         BattleWindow window = UIModule.Instance.GetWindow<BattleWindow>();
         transform.SetParent(window.transform);
         transform.localScale = Vector3.one;
@@ -28,7 +31,8 @@ public class DamageTextItem : MonoBehaviour
         text.DOFade(0,0.3f). SetDelay(0.2f);
         transform.DOMoveY(transform.position.y + 1, 0.2f).OnComplete(() =>
         {
-            GameObject.Destroy(gameObject);
+            //GameObject.Destroy(gameObject);
+            ZMAssetsFrame.Release(gameObject);
         }).SetDelay(0.2f);
         text.text = damageValue.ToString();
     }

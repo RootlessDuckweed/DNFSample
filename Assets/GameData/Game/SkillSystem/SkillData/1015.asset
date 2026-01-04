@@ -19,6 +19,8 @@ MonoBehaviour:
     isLoopAnim: 0
     loopCount: 0
     logicFrame: 45
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 0
     animLength: 3
     skillDurationMS: 3000
     tempCharacter: {fileID: 0}
@@ -30,17 +32,18 @@ MonoBehaviour:
     skillShakeBeforeTimeMS: 0
     skillAttackDurationMS: 3000
     skillShakeAfterTimeMS: 3000
-    skillCDTimeMS: 60000
+    skillCDTimeMS: 1
     skillType: 0
     stockPileStageData: []
     skillGuideObj: {fileID: 0}
     skillGuideRange: 0
     comboBinationSkillID: 1016
     skillHitEffect: {fileID: 5023627635078921320, guid: eebb9919fe1d53f4690a67203d880219, type: 3}
+    skillHitEffectPath: Assets/GameData/Game/Effects/Eff_Jianhun_Hit/Eff_jianhun_Hit.prefab
     hitEffectSurvivalTimeMs: 100
     skillHitAudio: {fileID: 8300000, guid: 627f5b77950816e448995f5bf4d1298e, type: 3}
-    showSkillPortrait: 0
-    skillPortraitObj: {fileID: 0}
+    showSkillPortrait: 1
+    skillPortraitObj: {fileID: 2820098208712261571, guid: ac1ead54a0d916343b7bc23a4c2b52c9, type: 3}
     skillDes: 
   damageCfgList:
   - triggerFrame: 8
@@ -77,6 +80,7 @@ MonoBehaviour:
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1347182702190826, guid: fc45849b0275c71489ed427ca8b89cdc, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_chongchu.prefab
     triggerFrame: 8
     endFrame: 14
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -111,10 +115,11 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1860367673197316, guid: 9efeeaa9c5ac2f842af55e82424cffcb, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_inbaiping.prefab
     triggerFrame: 14
     endFrame: 44
-    effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 5
+    effectOffsetPosition: {x: 0, y: 0, z: -3}
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -145,6 +150,7 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1811629667057744, guid: 6347a352f545df14981ceaeeb2bf5761, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_canying.prefab
     triggerFrame: 15
     endFrame: 44
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -179,10 +185,11 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1813342724688848, guid: a3c9d49b950960e42b058c96b6a25246, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_daoguang.prefab
     triggerFrame: 15
     endFrame: 44
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 5
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -213,6 +220,7 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1097995693667930, guid: 04c88d2ccc0e53c49a50ea87138f3464, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Common/Eff_baodian.prefab
     triggerFrame: 3
     endFrame: 8
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -292,3 +300,5 @@ MonoBehaviour:
     durationMs: 66
     actonFinishOption: 0
     actionFinishedList: 
+  bulletList: []
+  buffList: []

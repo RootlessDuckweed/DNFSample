@@ -5,7 +5,6 @@ using Sirenix.OdinInspector.Editor;
 using SkillSystem.Config;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SkillSystem.EditorWindow
 {
@@ -16,6 +15,9 @@ namespace SkillSystem.EditorWindow
         
         [TabGroup("SkillComplier","Skill",SdfIconType.Robot,TextColor = "lightmagenta")]
         public SkillConfig skillCfg = new SkillConfig();
+        
+        [TabGroup("SkillComplier","Buff",SdfIconType.Magic,TextColor = "lightmagenta")]
+        public List<SkillBuffConfig> buffList= new List<SkillBuffConfig>();
         
         [TabGroup("SkillComplier","Effect",SdfIconType.OpticalAudio,TextColor = "blue")]
         public List<SkillEffectConfig> effectList = new List<SkillEffectConfig>();
@@ -46,7 +48,7 @@ namespace SkillSystem.EditorWindow
         public void SaveSkillData()
         {
             SkillDataConfig.SaveSkillData(character, skillCfg, damageList,
-                effectList, audioList,actionList,bulletList);
+                effectList, audioList,actionList,bulletList, buffList);
             Close();
         }
 
@@ -59,6 +61,7 @@ namespace SkillSystem.EditorWindow
             audioList = skillDataConfig.audioList;
             actionList = skillDataConfig.actionList;
             bulletList = skillDataConfig.bulletList;
+            buffList = skillDataConfig.buffList;
         }
 
         protected override void OnEnable()
@@ -177,6 +180,10 @@ namespace SkillSystem.EditorWindow
         
         public static Vector3 GetCharacterPos()
         {
+            if (!HasOpenInstances<SkillComplierWindow>())
+            {
+                return Vector3.zero;
+            }
             var window = GetWindow<SkillComplierWindow>();
             if (window.character.skillCharacter != null)
             {

@@ -12,27 +12,35 @@ namespace SkillSystem.Runtime.Logic
         private LogicActor _skillCreator;
         private SkillEffectConfig _skillEffectConfig;
         private ColliderBehaviour _collider;
+        private Skill _skill;
         private int _accRunTime;
 
         public SkillEffectLogic(LogicObjectType objType, SkillEffectConfig effectCfg, RenderObject renderObject,
-            LogicActor skillCreator)
+            LogicActor skillCreator,Skill skill)
         {
             this.ObjectType = objType;
             this._skillEffectConfig = effectCfg;
             this._skillCreator = skillCreator;
             this.RenderObj = renderObject;
             this.LogicXAxis = skillCreator.LogicXAxis;
+            this._skill = skill;
+            ObjectType = LogicObjectType.Bullet;
             if (effectCfg.effectPosType == EffectPosType.FollowDir ||
                 effectCfg.effectPosType == EffectPosType.FollowPosDir)
             {
                 var offset = new FixIntVector3(effectCfg.effectOffsetPosition);
                 offset.x = offset.x * LogicXAxis;
-                offset.z = offset.z * LogicXAxis;
                 LogicPos = skillCreator.LogicPos + offset;
             }
             else if (effectCfg.effectPosType == EffectPosType.Zero)
             {
                 LogicPos = FixIntVector3.zero;
+            }
+            else if (effectCfg.effectPosType == EffectPosType.GuidePos)
+            {
+                FixIntVector3 offsetFixIntVector3 = new FixIntVector3(effectCfg.effectOffsetPosition);
+                offsetFixIntVector3.x *= skillCreator.LogicXAxis;
+                LogicPos = _skill.SkillGuidePos + offsetFixIntVector3;
             }
         }
 
@@ -84,9 +92,9 @@ namespace SkillSystem.Runtime.Logic
         {
             if (_skillEffectConfig.isAttachAction && logicFrame == _skillEffectConfig.actionConfig.triggerFrame)
             {
-                skill.AddMoveAction(_skillEffectConfig.actionConfig, this,finishedCallback:() =>
+                skill.AddMoveAction(_skillEffectConfig.actionConfig,this, _skillEffectConfig.effectOffsetPosition,finishedCallback:() =>
                 {
-                    _collider.OnRelease();
+                    _collider?.OnRelease();
                     skill.DestroyEffect(_skillEffectConfig);
                     _collider = null;
                     
@@ -128,6 +136,7 @@ namespace SkillSystem.Runtime.Logic
                 offset.x = offset.x * LogicXAxis;
                 offset.z = offset.z * LogicXAxis;
                 LogicPos = _skillCreator.LogicPos + offset;
+                LogicXAxis =  _skillCreator.LogicXAxis;
             }
         }
         

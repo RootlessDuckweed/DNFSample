@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FixIntPhysics;
 using FixMath;
+using Game;
 using LogicLayer;
 using RenderLayer;
 using SkillSystem.Buff;
@@ -42,8 +43,13 @@ namespace SkillSystem.Runtime.Logic
             pos.y = FixIntMath.Abs(pos.y);
             LogicPos = _fireLogicActor.LogicPos + pos;
             // 更新角度
-            LogicAngle = new FixIntVector3(_bulletCfg.angle);
-            LogicDir = new FixIntVector3(LogicXAxis, 0, 0);
+            var angle = new FixIntVector3(_bulletCfg.angle)*LogicXAxis;
+            if (LogicXAxis < 0)
+            {
+                angle += new FixIntVector3(0, 0, 180);
+            }
+            LogicAngle = angle;
+            LogicDir = new FixIntVector3(LogicXAxis, 0, 0) + new FixIntVector3(_bulletCfg.dirOffset);
             if (_bulletCfg.isAttachDamage)
             {
                 SkillDamageConfig damageConfig = _bulletCfg.damageCfg;
@@ -68,8 +74,8 @@ namespace SkillSystem.Runtime.Logic
             //子弹击中逻辑
             foreach (var target in _hitTargetsList)
             {
-                target.BulletDamage(99,_bulletCfg.damageCfg); // 造成伤害
-                target.OnHitByBullet(_bulletCfg.hitEffect,_bulletCfg.hitEffectSurvivalTimeMs,this); // 播放特效
+                target.BulletDamage(DamageCalculateCenter.CalculateDamage(_bulletCfg.damageCfg,_fireLogicActor,target),_bulletCfg.damageCfg,_fireLogicActor); // 造成伤害
+                target.OnHit(_bulletCfg.hitEffectPath,_bulletCfg.hitEffectSurvivalTimeMs,_fireLogicActor,this); // 播放特效
                 if (_bulletCfg.hitAudio != null) // 播放音效
                 {
                     AudioController.GetInstance().PlaySoundByAudioClip(_bulletCfg.hitAudio,false,1);

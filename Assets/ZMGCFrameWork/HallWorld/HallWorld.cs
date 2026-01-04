@@ -23,6 +23,7 @@ namespace ZMGC.Hall
             //大厅世界构建完成，弹出大厅弹窗
             UIModule.Instance.PopUpWindow<CreateRoleWindow>();
            /* UIModule.PopUpWindow<LoginWindow>();*/
+           AudioController.GetInstance().PlayMusicFade(AssetPathConfig.GAME_AUDIO_PATH+"BG/Login.mp3",2);
         }
         /// <summary>
         /// 从登录页进入大厅

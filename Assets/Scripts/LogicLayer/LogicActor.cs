@@ -12,7 +12,6 @@ namespace LogicLayer
         public override void OnCreate()
         {
             base.OnCreate();
-            InitActorSkill();
         }
 
         public override void OnLogicFrameUpdate()
@@ -44,39 +43,47 @@ namespace LogicLayer
             RenderObj.PlayAnim(clipName);
         }
 
-        public virtual void SkillDamage(FixInt damage,SkillDamageConfig skillDamageCfg)
+        public virtual void SkillDamage(FixInt damage,SkillDamageConfig skillDamageCfg,LogicActor source)
         {
             Debug.Log(RenderObj.name + " - SkillDamage: "+damage);
-            CalculateDamage(damage,DamageSource.Skill);
+            CalculateDamage(damage,DamageSource.Skill,source);
         }
 
-        public void CalculateDamage(FixInt damage,DamageSource damageSource)
+        public virtual void CalculateDamage(FixInt damage,DamageSource damageSource,LogicObject source)
         {
             // 判断对象是否死亡
             if (ObjectState == LogicObjectState.Survival)
             {
                 // 对象逻辑层血量减少
+                ReduceHP(damage);
+                if (this.HP <= FixInt.Zero)
+                {
+                    Collider.Active = false;
+                    ObjectState = LogicObjectState.Death;
+                    RenderObj.OnDeath();
+                }
                 // 进行伤害数值飘字渲染
-                RenderObj.Damage(damage.RawInt,damageSource);
-                
+                RenderObj.Damage(damage.RawInt,damageSource,source);
             }
         }
 
-        public void BulletDamage(FixInt damage,SkillDamageConfig damageCfg)
+        public void BulletDamage(FixInt damage,SkillDamageConfig damageCfg,LogicObject source)
         {
             Debug.Log(RenderObj.name + " - BulletDamage: "+damage);
-            CalculateDamage(damage,DamageSource.Bullet);
+            CalculateDamage(damage,DamageSource.Bullet,source);
         }
         
-        public virtual void OnHit(GameObject effect,int survivalTimeMs,LogicObject source)
+        public void BuffDamage(FixInt damage,SkillDamageConfig damageCfg,LogicObject source)
         {
-            RenderObj.OnHit(effect,survivalTimeMs,source);
+            Debug.Log(RenderObj.name + " - BuffDamage: "+damage);
+            CalculateDamage(damage,DamageSource.Buff,source);
         }
         
-        public virtual void OnHitByBullet(GameObject effect,int survivalTimeMs,LogicObject source)
+        public virtual void OnHit(string effectPath,int survivalTimeMs,LogicObject source,LogicObject effectPoint)
         {
-            RenderObj.OnHitByBullet(effect,survivalTimeMs,source);
+            RenderObj.OnHit(effectPath,survivalTimeMs,source,effectPoint);
         }
+        
 
         public virtual void Floating(bool isUpFloating) { }
 

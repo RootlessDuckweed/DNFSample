@@ -19,6 +19,8 @@ MonoBehaviour:
     isLoopAnim: 0
     loopCount: 0
     logicFrame: 3
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 0
     animLength: 0.23333347
     skillDurationMS: 233
     tempCharacter: {fileID: 0}
@@ -37,6 +39,7 @@ MonoBehaviour:
     skillGuideRange: 0
     comboBinationSkillID: 0
     skillHitEffect: {fileID: 5023627635078921320, guid: eebb9919fe1d53f4690a67203d880219, type: 3}
+    skillHitEffectPath: Assets/GameData/Game/Effects/Eff_Jianhun_Hit/Eff_jianhun_Hit.prefab
     hitEffectSurvivalTimeMs: 100
     skillHitAudio: {fileID: 8300000, guid: 4efb0f3057308b94f8a5da47f9d7c7cc, type: 3}
     showSkillPortrait: 0
@@ -45,6 +48,7 @@ MonoBehaviour:
   damageCfgList: []
   effectCfgList:
   - skillEffect: {fileID: 1295312060015824, guid: caa2999937d30d147a16ad60535c87c7, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_Jianhun_huanyinjianwu/Perfab/Eff_Huanyjw_dimian.prefab
     triggerFrame: 1
     endFrame: 10
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -86,3 +90,4 @@ MonoBehaviour:
     endFrame: 0
   actionList: []
   bulletList: []
+  buffList: []

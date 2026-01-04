@@ -55,8 +55,10 @@ namespace SkillSystem.Config
         
         // 技能渲染相关
         [TitleGroup("技能渲染","技能释放时产生的特效音效等相关")]
-        [LabelText("技能命中特效")]
+        [LabelText("技能命中特效"),OnValueChanged("GetObjectPath")]
         public GameObject skillHitEffect;
+
+        [ReadOnly] public string skillHitEffectPath;
         
         [TitleGroup("技能渲染")]
         [LabelText("技能命中特效存活时间")]
@@ -91,6 +93,13 @@ namespace SkillSystem.Config
            _showStockPileData = type == SkillType.StockPile;
            _showPosGuideData = type == SkillType.PosGuide;
         }
+        
+        #if UNITY_EDITOR        
+        public void GetObjectPath(GameObject obj)
+        {
+            skillHitEffectPath = UnityEditor.AssetDatabase.GetAssetPath(obj);
+        }
+        #endif
         
 #endregion
     }

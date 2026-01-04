@@ -32,8 +32,30 @@ MonoBehaviour:
   buffAudio: {fileID: 0}
   effectConfig:
     effect: {fileID: 0}
+    effectPath: 
     effectAttachType: 0
     buffEffectPosType: 0
   buffHitEffectObj: {fileID: 0}
+  buffHitEffectPath: 
   buffTriggerAnim: 0
+  targetConfig:
+    isOpen: 0
+    targetType: 0
+    damageCfg:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
   buffDes: 

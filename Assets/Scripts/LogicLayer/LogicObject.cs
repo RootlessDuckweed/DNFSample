@@ -13,7 +13,8 @@ namespace LogicLayer
         private FixInt _logicMoveSpeed = 3;
         private FixInt _logicXAxis = 1;
         private FixIntVector3 _isActive; // 当前对象是否激活
-
+        private bool _isForceAllowMove = false;
+        private bool _isNotForceAllowModifyDir = false;
         /// <summary>
         /// 逻辑位置
         /// </summary>
@@ -112,6 +113,23 @@ namespace LogicLayer
             get;
             set;
         }
+        /// <summary>
+        /// 是否强制允许移动
+        /// </summary>
+        public bool IsForceAllowMove
+        {
+            get => _isForceAllowMove;
+            set => _isForceAllowMove = value;
+        }
+
+        /// <summary>
+        /// 是否不允许改变朝向
+        /// </summary>
+        public bool IsForceAllowModifyDir
+        {
+            get => _isNotForceAllowModifyDir;
+            set => _isNotForceAllowModifyDir = value;
+        }
 
         /// <summary>
         /// 初始化接口
@@ -150,6 +168,7 @@ namespace LogicLayer
         Hero,
         Monster,
         Effect,
+        Bullet
     }
 
     public enum LogicObjectActionState

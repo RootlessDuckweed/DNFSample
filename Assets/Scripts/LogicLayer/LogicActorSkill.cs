@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using FixMath;
 using SkillSystem.Buff.BuffInstance;
 using SkillSystem.Config;
 using SkillSystem.Runtime;
 using Tools;
 using ZMGC.Battle;
+using ZMGC.Hall;
 
 namespace LogicLayer
 {
@@ -41,11 +43,11 @@ namespace LogicLayer
         /// <summary>
         /// 初始化技能
         /// </summary>
-        public void InitActorSkill()
+        public void InitActorSkill(int id)
         {
             HeroDataMgr heroData = BattleWorld.GetExitsDataMgr<HeroDataMgr>();
-            _normalSkillIdArr = heroData.GetHeroNormalSkillId(1001);
-            _skillIdArr = heroData.GetHeroSkillId(1001);
+            _normalSkillIdArr = heroData.GetHeroNormalSkillId(id);
+            _skillIdArr = heroData.GetHeroSkillId(id);
             _skillSystem = new SkillSystem.Runtime.SkillSystem(this);
             _skillSystem.InitSkills(_normalSkillIdArr);
             _skillSystem.InitSkills(_skillIdArr);
@@ -87,9 +89,10 @@ namespace LogicLayer
         /// 释放技能
         /// </summary>
         /// <param name="skillId"></param>
-        public void ReleaseSkill(int skillId,Action<bool> releaseSkillCallback = null)
+        /// /// <param name="guidePos"></param>
+        public void ReleaseSkill(int skillId,FixIntVector3 guidePos = default(FixIntVector3),Action<bool> releaseSkillCallback = null)
         {
-            Skill releaseSkill = _skillSystem.ReleaseSkill(skillId, OnSkillReleaseAfter, (releaseFinishedSkill) =>
+            Skill releaseSkill = _skillSystem.ReleaseSkill(skillId, guidePos,OnSkillReleaseAfter, (releaseFinishedSkill) =>
             {
                 if (releaseFinishedSkill.SkillCfg.skillType == SkillType.StockPile)
                 {
@@ -154,7 +157,7 @@ namespace LogicLayer
 
         public void OnLogicFrameUpdateSkill()
         {
-            _skillSystem.OnLogicFrameUpdate();
+            _skillSystem?.OnLogicFrameUpdate();
         }
 
         /// <summary>

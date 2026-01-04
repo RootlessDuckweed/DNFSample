@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using SkillSystem.Config;
+using UnityEditor;
 using UnityEngine;
 
 namespace SkillSystem.Buff.BuffCfg
@@ -23,7 +24,7 @@ namespace SkillSystem.Buff.BuffCfg
         [LabelText("buff持续时间(0表示一次，-1表示时间无限直到战斗结束)")]
         public int buffDurationMs;
         [LabelText("buff类型")]
-        public BuffTypeEnum buffType;
+        public BuffType buffType;
         [LabelText("附加目标")]
         public BuffAttachType attachType;
         [LabelText("附加位置")]
@@ -41,12 +42,41 @@ namespace SkillSystem.Buff.BuffCfg
         public AudioClip buffAudio;
         [LabelText("buff触发特效"),TitleGroup("buff表现","所有的表现数据会在buff触发释放时触发")]
         public BuffEffectConfig effectConfig;
-        [LabelText("buff命中特效"),TitleGroup("buff表现","所有的表现数据会在buff触发释放时触发")] 
+        [LabelText("buff命中特效"),TitleGroup("buff表现","所有的表现数据会在buff触发释放时触发"),OnValueChanged("GetObjectPath")] 
         public GameObject buffHitEffectObj;
+        [ReadOnly] public string buffHitEffectPath;
         [LabelText("buff触发动画"),TitleGroup("buff表现","所有的表现数据会在buff触发释放时触发")] 
         public ObjectAnimationState buffTriggerAnim = ObjectAnimationState.None;
+        
+        [LabelText("伤害/目标配置")]
+        public TargetConfig targetConfig;
+        
         [LabelText("buff描述"),HideLabel,MultiLineProperty(5)]  
         public string buffDes;
+        
+#if UNITY_EDITOR        
+        public void GetObjectPath(GameObject obj)
+        {
+            buffHitEffectPath = UnityEditor.AssetDatabase.GetAssetPath(obj);
+        }
+        public void SaveAsset()
+        {
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+        }
+#endif
+    }
+
+    [Serializable]
+    [TabGroup("目标配置")]
+    public class TargetConfig
+    {
+        [LabelText("是否启用")]
+        public bool isOpen = false;
+        [LabelText("作用目标"),ShowIf("isOpen")]
+        public TargetType targetType;
+        [LabelText("伤害检测配置"),ShowIf("isOpen")]
+        public SkillDamageConfig damageCfg;
     }
 
     /// <summary>
@@ -62,9 +92,17 @@ namespace SkillSystem.Buff.BuffCfg
     [Serializable]
     public class BuffEffectConfig
     {
-        [LabelText("特效对象")] public GameObject effect;
+        [LabelText("特效对象"),OnValueChanged("GetObjectPath")] public GameObject effect;
+        [ReadOnly] public string effectPath;
         [LabelText("特效附加类型")] public EffectAttachType effectAttachType;
         [LabelText("特效位置类型")] public BuffEffectPosType buffEffectPosType;
+        
+#if UNITY_EDITOR        
+        public void GetObjectPath(GameObject obj)
+        {
+            effectPath = UnityEditor.AssetDatabase.GetAssetPath(obj);
+        }
+#endif
     }
 
     [LabelText("特效位置类型")]
@@ -103,6 +141,7 @@ namespace SkillSystem.Buff.BuffCfg
         [LabelText("无配置")] None,
         [LabelText("跟随目标位置")] FollowTarget,
         [LabelText("击中目标位置")] HitTargetPos,
+        [LabelText("施法者位置")] ReleaserPos,
         [LabelText("UI摇杆输入位置")] UIInputPos,
     }
     
@@ -117,11 +156,17 @@ namespace SkillSystem.Buff.BuffCfg
         [LabelText("引导位置")]Guide_Pos,
     }
 
-    public enum BuffTypeEnum
+    public enum BuffType
     {
         [LabelText("无类型")] None = 0,
         [LabelText("击退")] Repel,
         [LabelText("浮空")] Floating,
-        [LabelText("僵直")] Stiff, 
+        [LabelText("僵直")] Stiff,
+        [LabelText("群体血量修改")]HpModifyGroup,
+        [LabelText("抓取")]Grab,
+        [LabelText("重力忽略")] IgnoreGravity,
+        [LabelText("单体移动速度修改")] MoveSpeedModifySingle,
+        [LabelText("允许移动")]AllowMove,
+        [LabelText("不允许转向")]NotAllowDir,
     }
 }

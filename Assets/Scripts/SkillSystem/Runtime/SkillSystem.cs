@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FixMath;
 using LogicLayer;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -66,13 +67,27 @@ namespace SkillSystem.Runtime
                 {
                     foreach (var item in skill.SkillCfg.stockPileStageData)
                     {
-                        InitSkills(new []{item.skillID});
+                        if (item.skillID != 0)
+                        {
+                            InitSkills(new []{item.skillID});
+                        }
+                    }
+                }
+                // 初始化相关联的伤害触发技能
+                if (skill.DamageCfgList.Count > 0)
+                {
+                    foreach (var item in skill.DamageCfgList)
+                    {
+                        if (item.triggerSkillID != 0)
+                        {
+                            InitSkills(new []{item.triggerSkillID});
+                        }
                     }
                 }
             }
         }
 
-        public Skill ReleaseSkill(int skillId, Action<Skill> releaseAfterCallback, Action<Skill> releaseEndCallback)
+        public Skill ReleaseSkill(int skillId,FixIntVector3 guidePos, Action<Skill> releaseAfterCallback, Action<Skill> releaseEndCallback)
         {
             // 技能在前摇状态下，是无法释放其他技能的
             if (_curReleasingSkill != null && _curReleasingSkill.State == SkillState.Before)
@@ -96,7 +111,7 @@ namespace SkillSystem.Runtime
                     {
                         CalculateCombinationSkillIdList(skillId);
                     }
-                    skill.ReleaseSkill(releaseAfterCallback, (ski, comboSkill) =>
+                    skill.ReleaseSkill(releaseAfterCallback, guidePos,(ski, comboSkill) =>
                     {
                         // 释放完成技能的回调
                         releaseEndCallback?.Invoke(ski);

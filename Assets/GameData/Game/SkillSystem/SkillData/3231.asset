@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8533e6f0b314978a9ebe869a48bd4b3, type: 3}
+  m_Name: 3231
+  m_EditorClassIdentifier: 
+  character:
+    skillCharacter: {fileID: 1655574422363594, guid: 6e03e17984fcffe4792b9533f4280fb2, type: 3}
+    skillAnimClip: {fileID: 7400000, guid: 3c782bf9c918a5b46a093c6101827c06, type: 2}
+    animProgress: 100
+    isLoopAnim: 1
+    loopCount: 15
+    logicFrame: 45
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 0
+    animLength: 3.0000007
+    skillDurationMS: 3000
+    tempCharacter: {fileID: 0}
+  skillCfg:
+    skillIcon: {fileID: 21300000, guid: a21628cdf9c20584f92d8957c23a48a1, type: 3}
+    skillId: 3231
+    skillName: "\u805A\u7126\u55B7\u706B\u5668\u53D1\u5C04"
+    needMagicValue: 100
+    skillShakeBeforeTimeMS: 0
+    skillAttackDurationMS: 3000
+    skillShakeAfterTimeMS: 3000
+    skillCDTimeMS: 0
+    skillType: 0
+    stockPileStageData: []
+    skillGuideObj: {fileID: 0}
+    skillGuideRange: 0
+    comboBinationSkillID: 0
+    skillHitEffect: {fileID: 1709585897738810, guid: 80413ee31b142a34e9b2d17922427ee9, type: 3}
+    skillHitEffectPath: Assets/GameData/Game/Effects/Hero_Qiangpao/Jujiaopenhuoqi/Prefab/Eff_Jujiaopenhuoqi_hit.prefab
+    hitEffectSurvivalTimeMs: 100
+    skillHitAudio: {fileID: 0}
+    showSkillPortrait: 0
+    skillPortraitObj: {fileID: 0}
+    skillDes: 
+  damageCfgList:
+  - triggerFrame: 2
+    endFrame: 45
+    triggerIntervalMS: 400
+    isFollowEffect: 0
+    damageType: 2
+    damageRate: 190
+    damageDetectionMode: 1
+    boxSize: {x: 10, y: 2, z: 1}
+    boxOffset: {x: 6, y: 1, z: 0}
+    sphereOffset: {x: 0, y: 0.9, z: 0}
+    radius: 1
+    radiusHeight: 0
+    colliderPosType: 1
+    targetType: 2
+    addBuffs: 367e0000
+    triggerSkillID: 0
+  effectCfgList:
+  - skillEffect: {fileID: 149314, guid: 0fb3643cff7edfc499c4a8ffd9944857, type: 3}
+    skillEffectPath: Assets/GameData/Game/Arts/Actor/Hero_Gunman/Weapon/Prefabs/p_FireGun_01_skin.prefab
+    triggerFrame: 0
+    endFrame: 45
+    effectOffsetPosition: {x: 0, y: 0, z: 0}
+    effectPosType: 5
+    isSetTransformParent: 1
+    transformParentType: 1
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  - skillEffect: {fileID: 1470107539043958, guid: 4abf2a9c4f6f94f438c40ca04ee1db43, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Qiangpao/Jujiaopenhuoqi/Prefab/Eff_Jujiaopenhuoqi_fire.prefab
+    triggerFrame: 1
+    endFrame: 45
+    effectOffsetPosition: {x: 2.5, y: 1.3, z: 0}
+    effectPosType: 0
+    isSetTransformParent: 0
+    transformParentType: 0
+    isAttachDamage: 0
+    damageConfig:
+      triggerFrame: 0
+      endFrame: 0
+      triggerIntervalMS: 0
+      isFollowEffect: 0
+      damageType: 0
+      damageRate: 0
+      damageDetectionMode: 0
+      boxSize: {x: 1, y: 1, z: 1}
+      boxOffset: {x: 0, y: 0, z: 0}
+      sphereOffset: {x: 0, y: 0.9, z: 0}
+      radius: 1
+      radiusHeight: 0
+      colliderPosType: 0
+      targetType: 0
+      addBuffs: 
+      triggerSkillID: 0
+    isAttachAction: 0
+    actionConfig:
+      triggerFrame: 0
+      moveActionType: 0
+      heightPos: {x: 0, y: 0, z: 0}
+      movePos: {x: 0, y: 0, z: 0}
+      durationMs: 0
+      actonFinishOption: 0
+      actionFinishedList: 
+  audioList:
+  - skillAudio: {fileID: 8300000, guid: 3a38b5b654b3d924cbb6633e49782d43, type: 3}
+    audioName: gunman_hh_jvjiaophq
+    triggerFrame: 0
+    isLoop: 0
+    endFrame: 0
+  actionList: []
+  bulletList: []
+  buffList:
+  - buffId: 32311
+    triggerFrame: 0
+  - buffId: 32312
+    triggerFrame: 0
+  - buffId: 32313
+    triggerFrame: 0

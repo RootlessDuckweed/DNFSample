@@ -7,17 +7,19 @@
 * 注意:以下文件为自动生成，强制再次生成将会覆盖
 ----------------------------------------------------------------------------------------*/
 
+using Game.Tools;
 using LogicLayer.Hero;
 using RenderLayer;
 using UnityEngine;
 using ZM.AssetFrameWork;
+using ZMGC.Hall;
 
 namespace ZMGC.Battle
 {
 	public  class HeroLogicCtrl : ILogicBehaviour
 	{
 		public HeroLogic HeroLgc { get; private set; }
-
+		public int HeroID { get; private set; }
 		public  void OnCreate()
 		{
 			
@@ -25,13 +27,15 @@ namespace ZMGC.Battle
 
 		public void InitHero()
 		{
-			GameObject heroObj = ZMAssetsFrame.Instantiate(AssetPathConfig.GAME_PREFABS_HERO + "1001",null);
+			HeroID = HallWorld.GetExitsDataMgr<UserDataMgr>().RoleId;
+			GameObject heroObj = ZMAssetsFrame.Instantiate(AssetPathConfig.GAME_PREFABS_HERO + HeroID,null);
 			HeroRender heroRender = heroObj.GetComponent<HeroRender>();
-			HeroLogic heroLogic = new HeroLogic(1001, heroRender);
+			HeroLogic heroLogic = new HeroLogic(HeroID, heroRender);
 			HeroLgc = heroLogic;
 			heroRender.SetLogicObject(heroLogic);
 			heroLogic.OnCreate();
 			heroRender.OnCreate();
+			GameObject.Find("Main Camera").GetComponent<CameraFollow>().target = heroObj.transform;
 		}
 
 		public void OnLogicFrameUpdate()

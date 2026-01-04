@@ -174,16 +174,16 @@ Animation:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2472867391060537970}
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: e534b7034aade694b86edd8162130304, type: 2}
   m_Animations:
+  - {fileID: 7400000, guid: ea2c691c0c650ff4695c42f35ae6f6db, type: 2}
   - {fileID: 7400000, guid: e534b7034aade694b86edd8162130304, type: 2}
   - {fileID: 7400000, guid: 89ff389c3b277474b912ea6ddd23152b, type: 2}
   - {fileID: 7400000, guid: b372f4c1edfe9964892baca057aaa725, type: 2}
   - {fileID: 7400000, guid: 89ff389c3b277474b912ea6ddd23152b, type: 2}
   - {fileID: 7400000, guid: d0b742f31f6693f43a5858c625cf651c, type: 2}
   - {fileID: 7400000, guid: 5511631a8aa72dd49b3ed4d961ce3dcd, type: 2}
-  - {fileID: 7400000, guid: ea2c691c0c650ff4695c42f35ae6f6db, type: 2}
   - {fileID: 7400000, guid: b6fa9322131ded84bbd128d8e0963557, type: 2}
   - {fileID: 7400000, guid: bb8908b64de5aa946879c2a3d4b67f5b, type: 2}
   - {fileID: 7400000, guid: 7eb52998913de944d88b0af0118c4f89, type: 2}
@@ -202,7 +202,6 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
-  m_UpdateMode: 0
   m_CullingType: 0
 --- !u!114 &2474654211202737803
 MonoBehaviour:
@@ -1557,8 +1556,6 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

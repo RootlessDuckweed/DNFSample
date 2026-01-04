@@ -39,6 +39,7 @@ MonoBehaviour:
     skillGuideRange: 0
     comboBinationSkillID: 0
     skillHitEffect: {fileID: 0}
+    skillHitEffectPath: 
     hitEffectSurvivalTimeMs: 100
     skillHitAudio: {fileID: 0}
     showSkillPortrait: 0
@@ -63,6 +64,7 @@ MonoBehaviour:
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1260345263929180, guid: c7c505829f64b5045a71b3ada1cb3791, type: 3}
+    skillEffectPath: Assets/GameData/Game/Arts/Actor/Weapon/Weapon_Gun/Weapon_Gun_Jiguangpao_1/Weapon_Gun_Jiguangpao_1/Prefabs/p_Hero_GunMan_weapon_Jiguangpao_1.prefab
     triggerFrame: 0
     endFrame: 15
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -97,6 +99,7 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1090262287863842, guid: 02be04633d5276c4d859c6034e18ee38, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Qiangpao/Jiguangpao/Prefab/Eff_Jiguangpao_jiguang.prefab
     triggerFrame: 1
     endFrame: 15
     effectOffsetPosition: {x: 0, y: 0.2, z: 0}
@@ -131,6 +134,7 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1128845395510674, guid: 4afbcc7afe55d264f997f2a8dc3c1e0e, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Qiangpao/Jiguangpao/Prefab/Eff_Jiguangpao_kouxuli_guo.prefab
     triggerFrame: 0
     endFrame: 10
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -184,3 +188,4 @@ MonoBehaviour:
     actonFinishOption: 0
     actionFinishedList: 
   bulletList: []
+  buffList: []

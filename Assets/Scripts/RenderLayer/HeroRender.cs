@@ -1,7 +1,9 @@
-﻿using FixMath;
+﻿using System;
+using FixMath;
 using LogicLayer;
 using LogicLayer.Hero;
 using SkillSystem.Config;
+using SkillSystem.Runtime;
 using UnityEngine;
 
 namespace RenderLayer
@@ -19,6 +21,10 @@ namespace RenderLayer
         /// 右手节点
         /// </summary>
         public Transform rightRoot;
+        /// <summary>
+        /// 技能引导对象
+        /// </summary>
+        private GameObject _skillGuideEffectObj;
         public override void OnCreate()
         {
             base.OnCreate();
@@ -73,6 +79,10 @@ namespace RenderLayer
         /// <param name="clipName"></param>
         public override void PlayAnim(string clipName)
         {
+            if (anim.GetClip(clipName) == null)
+            {
+               return;
+            }
             anim.CrossFade(clipName,0.2f);
         }
 
@@ -93,6 +103,46 @@ namespace RenderLayer
             if(type==TransformParentType.RightHand) return rightRoot;
             
             return null;
+        }
+
+        public void InitSkillGuide(int skillId)
+        {
+            if (_skillGuideEffectObj == null)
+            {
+                Skill skill = _heroLogic.GetSkill(skillId);
+                _skillGuideEffectObj = GameObject.Instantiate(skill.SkillCfg.skillGuideObj);
+                _skillGuideEffectObj.transform.localScale = Vector3.one;
+            }
+        }
+
+        public void UpdateSkillGuide(SKillGuideType skillGuideType,int skillId,bool isPressed,Vector3 pos,float skillRange)
+        {
+            InitSkillGuide(skillId);
+            switch (skillGuideType)
+            {
+                case SKillGuideType.None:
+                    break;
+                case SKillGuideType.Click:
+                    break;
+                case SKillGuideType.LongPress:
+                    break;
+                case SKillGuideType.Position:
+                    Vector3 skillGuidePos = transform.position + pos;
+                    //限制当前位置的Z轴，不能超过地图
+                    skillGuidePos = new Vector3(skillGuidePos.x, 0, Mathf.Clamp(skillGuidePos.z, -1, 8.6f));
+                    _skillGuideEffectObj.transform.localPosition = skillGuidePos;
+                    break;
+                case SKillGuideType.Direction:
+                    break;
+            }
+        }
+
+        public void OnGuideRelease()
+        {
+            if (_skillGuideEffectObj != null)
+            {
+                Destroy(_skillGuideEffectObj);
+            }
         }
     }
 }

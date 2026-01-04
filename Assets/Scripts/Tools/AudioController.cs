@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ZM.AssetFrameWork;
 
 /// <summary>
 /// 音效播放器(优先级)
@@ -40,7 +41,7 @@ public class AudioController : MonoBehaviour
     /// <summary>
     /// 音乐音量
     /// </summary>
-    private float mMusicVolume = 1;
+    private float mMusicVolume = 0.3f;
 
     /// <summary>
     /// 单利
@@ -77,18 +78,19 @@ public class AudioController : MonoBehaviour
     /// <summary>
     /// 获取音频剪辑
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="fullPath"></param>
     /// <returns></returns>
-    private AudioClip GetAudioClip(string path)
+    private AudioClip GetAudioClip(string fullPath)
     {
         AudioClip clip = null;
         //判断资源池当中有没有这个声音
-        if (!soundAudioDic.TryGetValue(path, out clip) && clip == null)
+        if (!soundAudioDic.TryGetValue(fullPath, out clip) && clip == null)
         {
             //clip = Resources.Load<AudioClip>("Audio/" + name);//同一个声音反复加载，能不能存起来，不要加载
             //clip = ("Audios/V3/DeepRoomSound.mp3");
+            clip = ZMAssetsFrame.LoadAudio(fullPath);
             //放入字典
-            soundAudioDic.Add(path, clip);
+            soundAudioDic.Add(fullPath, clip);
             //soundAudioDic.Clear();
         }
 
@@ -217,11 +219,11 @@ public class AudioController : MonoBehaviour
     /// <summary>
     /// 渐隐播放背景音乐 
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="fullPath"></param>
     /// <param name="duration"></param>
-    public void PlayMusicFade(string name, float duration)
+    public void PlayMusicFade(string fullPath, float duration)
     {
-        AudioClip clip = GetAudioClip(name);
+        AudioClip clip = GetAudioClip(fullPath);
         if (clip != null)
         {
             mMusicSource.Stop();

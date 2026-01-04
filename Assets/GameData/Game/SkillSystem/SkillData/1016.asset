@@ -19,6 +19,8 @@ MonoBehaviour:
     isLoopAnim: 0
     loopCount: 0
     logicFrame: 28
+    isSetCustomLogicFrame: 0
+    customLogicFrame: 0
     animLength: 1.9000002
     skillDurationMS: 1900
     tempCharacter: {fileID: 0}
@@ -37,6 +39,7 @@ MonoBehaviour:
     skillGuideRange: 0
     comboBinationSkillID: 0
     skillHitEffect: {fileID: 1616054244234058, guid: 6fa2ce608b2382e46a49e7e06745afea, type: 3}
+    skillHitEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_die.prefab
     hitEffectSurvivalTimeMs: 100
     skillHitAudio: {fileID: 8300000, guid: b9c054822d33f4a408b459f0fe7e027e, type: 3}
     showSkillPortrait: 0
@@ -61,6 +64,7 @@ MonoBehaviour:
     triggerSkillID: 0
   effectCfgList:
   - skillEffect: {fileID: 1729168272619954, guid: 6c02a40ad3baa5944b3ff36cf129ea94, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_chajian.prefab
     triggerFrame: 17
     endFrame: 28
     effectOffsetPosition: {x: 0, y: 0, z: 0}
@@ -95,10 +99,11 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1782029685683990, guid: 5a85782219e031243b013e061320293d, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_jianhun_juexing_henkan.prefab
     triggerFrame: 20
     endFrame: 28
     effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 0
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -129,10 +134,11 @@ MonoBehaviour:
       actonFinishOption: 0
       actionFinishedList: 
   - skillEffect: {fileID: 1497242364561560, guid: a187897b1a95992458b8bcf3a81d1c69, type: 3}
+    skillEffectPath: Assets/GameData/Game/Effects/Hero_Jianhun/Eff_jianhun_juexing/Prefeb/Eff_UI_jianhunjuexing_baipingout.prefab
     triggerFrame: 20
     endFrame: 28
-    effectOffsetPosition: {x: 0, y: 0, z: 0}
-    effectPosType: 5
+    effectOffsetPosition: {x: 0, y: 0, z: -3}
+    effectPosType: 1
     isSetTransformParent: 0
     transformParentType: 0
     isAttachDamage: 0
@@ -169,3 +175,5 @@ MonoBehaviour:
     isLoop: 0
     endFrame: 0
   actionList: []
+  bulletList: []
+  buffList: []

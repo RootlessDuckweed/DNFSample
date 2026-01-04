@@ -108,7 +108,8 @@ namespace SkillSystem.Config
         public void Pause()
         {
             _isPlayAnim = false;
-            
+            var window = SkillComplierWindow.GetWindow(); 
+            window.SkillPause();
         }
 
         [Button("保存",ButtonSizes.Large)]
